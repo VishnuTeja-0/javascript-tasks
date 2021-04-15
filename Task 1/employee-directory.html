@@ -3,8 +3,9 @@
     <head>
     	<meta charset = "utf-8">
     	<title>Saketa</title>
+        <link rel = "stylesheet" href= "employee-directory.css">
     </head>
-    <body onload = "LoadLetterFilters(); LoadEmployeeList()">
+    <body onload = "LoadLetterFilters(); LoadEmployeeList(); ShowAllEmployees()">
     	<div class = "header">
     		<div class = "logo">
     			<img src = "resources/logo.png" alt = "Saketa">
@@ -20,41 +21,33 @@
     	</div>
     	<div class = "content">
     		<div class = "nav">
-    			<h5>Departments</h5>
+    			<h4>Departments</h4>
     			<ul class = "departmentList">
-    				<li>IT(21)</li>
-    				<li>Human Resources(2)</li>
-    				<li>MD(1)</li>
-    				<li>Sales(4)</li>
     			</ul>
-    			<h5>Offices</h5>
+    			<h4>Offices</h4>
     			<ul class = "officeList">
-    				<li>Seattle(1)</li>
-    				<li>India(1)</li>
     			</ul>
-    			<h5>Job Titles</h5>
+    			<h4>Job Titles</h4>
     			<ul class = "jobList">
-    				<li>SharePoint Practice Head(1)</li>
-    				<li>.Net Development Lead</li>
-    				<li>Recruiting Expert(1)</li>
-    				<li>BI Developer(1)</li>
-    				<li>Business Analyst(1)</li>
     			</ul>
     			<span>view more</span>
     		</div>
     		<div class = "directory">
-                <div id = "letterFilters"></div>
+                <div id = "letterFilters">
+                    <button id= "AllBtn" onclick= "ShowAllEmployees()"></button>
+                </div>
                 <h5>Search</h5>
-                <input class = "txt" type = "text" placeholder = "Enter any keyword">
-                <input class = "btn" type = "submit" value = "Clear">
+                <input class = "txt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                <input class = "btn" type = "button" value = "Clear" onclick= "ShowAllEmployees()">
                 <h5>Filter by</h5>
-                <input list = "filterOptions">
+                <input id = 'filterSelector' list = "filterOptions">
                 <datalist id = "filterOptions">
                     <option value = "First Name"></option>
                     <option value = "Last Name"></option>
                     <option value = "Preferred Name"></option>
                     <option value = "Email"></option>
                     <option value = "Job Title"></option>
+                    <option value = "Office"></option>
                     <option value = "Department"></option>
                     <option value = "Phone Number"></option>
                     <option value = "Skype ID"></option>
@@ -92,13 +85,13 @@
                             <label for= "skypeId">Skype ID : </label>
                             <input type= "text" id= "skypeId"><br>
                             <div class= "errorMessage" id= "SkypeIdError"></div>
-                            <input type= "button" value= "Submit" onclick= "validateEmployeeDetails()">
+                            <input type= "button" value= "Submit" onclick= "ValidateEmployeeDetails()">
                             <div class= "successMessage" id= "employeeAddedMessage"></div>
                         </form>
                     </div>
                 </div>
                 <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>
-                <div class = "employeeCards"></div>
+                <div id = "employeeCards"></div>
             </div>
         </div>
         <script src = "employee-directory.js"></script>

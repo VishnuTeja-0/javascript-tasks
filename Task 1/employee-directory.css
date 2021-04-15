@@ -1,0 +1,43 @@
+﻿body {
+    margin: 40px 30px;
+    font-family: "arial", sans-serif;
+    font-weight: 200;
+}
+
+.header div {
+    display: inline-block;
+}
+
+.header div h1 {
+    margin: 0;
+    font-weight: 100;
+}
+
+.title {
+    margin-left: 10px;
+}
+
+.title h1 {
+    color: rgba(0,177,252,255);
+}
+
+.title h3 {
+    margin: 0;
+    font-weight: 100;
+}
+
+.user {
+    float: right;
+}
+
+.user * {
+    display: inline-block;
+}
+
+.user h1 {
+    font-size: 180%;
+}
+
+.welcomeMessage {
+    color: rgba(0,177,252,255);
+}

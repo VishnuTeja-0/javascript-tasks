@@ -21,6 +21,7 @@ function LoadLetterFilters() {
         var btn = document.createElement("button");
         btn.innerHTML = letter;
         btn.id = letter + "Btn";
+        btn.setAttribute("onclick", "ShowEmployeeByLetter(String(this.id))");
         container.appendChild(btn);
     }
 }
@@ -29,24 +30,24 @@ function LoadEmployeeList() {
     employees = new Array();
 }
 
-function validateEmployeeDetails() {
+function ValidateEmployeeDetails() {
     var firstName = document.getElementById('firstName').value;
-    if (!isAlphabetic(firstName)) {
+    if (!IsAlphabetic(firstName)) {
         firstNameError.innerHTML = "Enter valid alphabetic input for first name";
         return;
     }
     var lastName = document.getElementById('lastName').value; 
-    if (!isAlphabetic(lastName)) {
+    if (!IsAlphabetic(lastName)) {
         lastNameError.innerHTML = "Enter valid alphabetic input for last name";
         return;
     }
     var preferredName = document.getElementById('preferredName').value;
-    if (!isAlphabetic(preferredName)) {
+    if (!IsAlphabetic(preferredName)) {
         preferredNameError.innerHTML = "Enter valid alphabetic input for preffered name";
         return;
     }
     var email = document.getElementById('email').value;
-    if (!isEmail(email)) {
+    if (!IsEmail(email)) {
         emailIdError.innerHTML = "Enter valid email ID";
         return;
     }
@@ -66,7 +67,7 @@ function validateEmployeeDetails() {
         return;
     }
     var phoneNumber = document.getElementById('phoneNumber').value;
-    if (!isPhoneNumber(phone)) {
+    if (!IsPhoneNumber(phoneNumber)) {
         phoneNumberError.innerHTML = "Enter valid phone number";
         return;
     }
@@ -78,16 +79,16 @@ function validateEmployeeDetails() {
     AddEmployee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId);
 }
 
-function isAlphabetic(str) {
+function IsAlphabetic(str) {
     return /^[a-zA-Z]+$/.test(str);
 }
 
-function isEmail(str) {
+function IsEmail(str) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(str);
 }
 
-function isPhoneNumber(str) {
+function IsPhoneNumber(str) {
     return /^[0]?[789]\d{9}$/.test(str);
 }
 
@@ -95,6 +96,81 @@ function AddEmployee(firstName, lastName, preferredName, email, jobTitle, office
     let employee = new Employee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId);
     employees.push(employee);
     document.getElementById('employeeAddedMessage').innerHTML = "Employee successfully added to directory!";
+    ShowAllEmployees();
 }
 
+function ShowAllEmployees() {
+    document.getElementById("employeeCards").innerHTML = "";
+    employees.forEach(DisplayEmployeeCard);
+}
 
+function ShowEmployeeByLetter(str) {
+    document.getElementById("employeeCards").innerHTML = "";
+    var filteredEmployees = employees.filter(FilterEmployeeByLetter(str[0]));
+    filteredEmployees.forEach(DisplayEmployeeCard);
+}
+
+function ShowEmployeeByProperty(str, property) {
+    var employeeProperty;
+    switch (property) {
+        case "First Name":
+            employeeProperty = 'firstName';
+            break;
+        case "Last Name":
+            employeeProperty = 'lastName';
+            break;
+        case "Preferred Name":
+            employeeProperty = 'preferredName';
+            break;
+        case "Email":
+            employeeProperty = 'email';
+            break;
+        case "Job Title":
+            employeeProperty = 'jobTitle';
+            break;
+        case "Office":
+            employeeProperty = 'office';
+            break;
+        case "Department":
+            employeeProperty = 'department';
+            break;
+        case "Phone Number":
+            employeeProperty = 'phoneNumber';
+            break;
+        case "Skype ID":
+            employeeProperty = 'skypeId';
+            break;
+    }
+    var filteredEmployees = employees.filter(FilterEmployeeByProperty(str, employeeProperty));
+    filteredEmployees.forEach(DisplayEmployeeCard);
+}
+
+function DisplayEmployeeCard(item) {
+    var employeeCard = document.createElement("div");
+
+    var employeeName = document.createElement("h4");
+    employeeName.innerHTML = item.firstName + " " + item.lastName;
+    employeeCard.appendChild(employeeName);
+
+    var employeeJobTitle = document.createElement("p");
+    employeeJobTitle.innerHTML = item.jobTitle;
+    employeeCard.appendChild(employeeJobTitle);
+
+    var employeeDepartment = document.createElement("p");
+    employeeDepartment.innerHTML = item.department;
+    employeeCard.appendChild(employeeDepartment);
+
+    document.getElementById("employeeCards").appendChild(employeeCard);
+}
+
+function FilterEmployeeByLetter(str) {
+    return function (item) {
+        return item.lastName.indexOf(str) === 0;
+    }
+}
+
+function FilterEmployeeByProperty(str, property) {
+    return function (item) {
+        return String(item[property]).toUpperCase().startsWith(str.toUpperCase()); 
+    }
+}
