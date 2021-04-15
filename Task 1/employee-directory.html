@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset = "utf-8">
+    	<title>Saketa</title>
+    </head>
+    <body onload = "LoadLetterFilters(); LoadEmployeeList()">
+    	<div class = "header">
+    		<div class = "logo">
+    			<img src = "resources/logo.png" alt = "Saketa">
+    		</div>
+    		<div class = "title">
+    			<h1>Employee Directory</h1>
+    			<h3>The Ultimate People Directory Experience</h3>
+    		</div>
+    		<div class = "user">
+    			<h1><span class = "welcomeMessage">Welcome,</span> Andrew Philips</h1>
+    			<img src = "#" alt = "User">
+    		</div>
+    	</div>
+    	<div class = "content">
+    		<div class = "nav">
+    			<h5>Departments</h5>
+    			<ul class = "departmentList">
+    				<li>IT(21)</li>
+    				<li>Human Resources(2)</li>
+    				<li>MD(1)</li>
+    				<li>Sales(4)</li>
+    			</ul>
+    			<h5>Offices</h5>
+    			<ul class = "officeList">
+    				<li>Seattle(1)</li>
+    				<li>India(1)</li>
+    			</ul>
+    			<h5>Job Titles</h5>
+    			<ul class = "jobList">
+    				<li>SharePoint Practice Head(1)</li>
+    				<li>.Net Development Lead</li>
+    				<li>Recruiting Expert(1)</li>
+    				<li>BI Developer(1)</li>
+    				<li>Business Analyst(1)</li>
+    			</ul>
+    			<span>view more</span>
+    		</div>
+    		<div class = "directory">
+                <div id = "letterFilters"></div>
+                <h5>Search</h5>
+                <input class = "txt" type = "text" placeholder = "Enter any keyword">
+                <input class = "btn" type = "submit" value = "Clear">
+                <h5>Filter by</h5>
+                <input list = "filterOptions">
+                <datalist id = "filterOptions">
+                    <option value = "First Name"></option>
+                    <option value = "Last Name"></option>
+                    <option value = "Preferred Name"></option>
+                    <option value = "Email"></option>
+                    <option value = "Job Title"></option>
+                    <option value = "Department"></option>
+                    <option value = "Phone Number"></option>
+                    <option value = "Skype ID"></option>
+                </datalist>
+                <button id = "addEmployeeBtn" type = "button">Add Employee</button>
+                <div id = "addEmployeeModal" class = "modal">
+                    <div class = "modalContent">
+                        <span class = "closeBtn">&times;</span>
+                        <h3>Add New Employee Information</h3>
+                        <form>
+                            <label for= "firstName">First Name : </label>
+                            <input type="text" id= "firstName"><br>
+                            <div class= "errorMessage" id= "firstNameError"></div>
+                            <label for= "lastName">Last Name : </label>
+                            <input type="text" id= "lastName"><br>
+                            <div class= "errorMessage" id= "lastNameError"></div>
+                            <label for= "preferredName">Preferred Name : </label>
+                            <input type= "text" id= "preferredName"><br>
+                            <div class= "errorMessage" id= "preferredNameError"></div>
+                            <label for= "email">Email : </label>
+                            <input type= "email" id= "email" placeholder= "abc@example.com"><br>
+                            <div class= "errorMessage" id= "emailIdError"></div>
+                            <label for= "jobTitle">Job Title : </label>
+                            <input type= "text" id= "jobTitle"><br>
+                            <div class= "errorMessage" id= "jobTitleError"></div>
+                            <label for= "office">Office : </label>
+                            <input type= "text" id= "office"><br>
+                            <div class= "errorMessage" id= "officeError"></div>
+                            <label for= "department">Department : </label>
+                            <input type= "text" id= "department"><br>
+                            <div class= "errorMessage" id= "departmentError"></div>
+                            <label for= "phoneNumber">Phone Number : </label>
+                            <input type= "tel" id= "phoneNumber"><br>
+                            <div class= "errorMessage" id= "phoneNumberError"></div>
+                            <label for= "skypeId">Skype ID : </label>
+                            <input type= "text" id= "skypeId"><br>
+                            <div class= "errorMessage" id= "SkypeIdError"></div>
+                            <input type= "button" value= "Submit" onclick= "validateEmployeeDetails()">
+                            <div class= "successMessage" id= "employeeAddedMessage"></div>
+                        </form>
+                    </div>
+                </div>
+                <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>
+                <div class = "employeeCards"></div>
+            </div>
+        </div>
+        <script src = "employee-directory.js"></script>
+    </body>
+</html>
