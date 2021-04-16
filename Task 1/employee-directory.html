@@ -5,7 +5,7 @@
     	<title>Saketa</title>
         <link rel = "stylesheet" href= "employee-directory.css">
     </head>
-    <body onload = "LoadLetterFilters(); LoadEmployeeList(); ShowAllEmployees()">
+    <body onload = "LoadLetterFilters(); LoadEmployeeList(); InsertTestEmployeeRecords(); ShowAllEmployees(); GenerateSpecialFilters()">
     	<div class = "header">
     		<div class = "logo">
     			<img src = "resources/logo.png" alt = "Saketa">
@@ -22,13 +22,13 @@
     	<div class = "content">
     		<div class = "nav">
     			<h4>Departments</h4>
-    			<ul class = "departmentList">
+    			<ul id = "departmentList">
     			</ul>
     			<h4>Offices</h4>
-    			<ul class = "officeList">
+    			<ul id = "officeList">
     			</ul>
     			<h4>Job Titles</h4>
-    			<ul class = "jobList">
+    			<ul id = "jobTitleList">
     			</ul>
     			<span>view more</span>
     		</div>
@@ -37,8 +37,8 @@
                     <button id= "AllBtn" onclick= "ShowAllEmployees()"></button>
                 </div>
                 <h5>Search</h5>
-                <input class = "txt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
-                <input class = "btn" type = "button" value = "Clear" onclick= "ShowAllEmployees()">
+                <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
                 <h5>Filter by</h5>
                 <input id = 'filterSelector' list = "filterOptions">
                 <datalist id = "filterOptions">

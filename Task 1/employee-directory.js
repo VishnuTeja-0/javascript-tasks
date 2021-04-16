@@ -1,5 +1,12 @@
 var employees;
 
+function InsertTestEmployeeRecords() {
+    var employee1 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Hyderabad", "Product Engineering", "7042687411", "ffad");
+    var employee2 = new Employee("Krishna", "Aditya", "Krishna", "baenus2003@gmail.com", "Intern", "Seattle", "Product Engineering", "8368290428", "gggg");
+    employees.push(employee1);
+    employees.push(employee2);
+}
+
 class Employee {
     constructor(firstName, lastName, prefferedName, email, jobTitle, office, department, phoneNumber, skypeId) {
         this.firstName = firstName;
@@ -77,6 +84,7 @@ function ValidateEmployeeDetails() {
         return;
     }
     AddEmployee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId);
+    GenerateSpecialFilters();
 }
 
 function IsAlphabetic(str) {
@@ -111,6 +119,7 @@ function ShowEmployeeByLetter(str) {
 }
 
 function ShowEmployeeByProperty(str, property) {
+    document.getElementById("employeeCards").innerHTML = "";
     var employeeProperty;
     switch (property) {
         case "First Name":
@@ -173,4 +182,48 @@ function FilterEmployeeByProperty(str, property) {
     return function (item) {
         return String(item[property]).toUpperCase().startsWith(str.toUpperCase()); 
     }
+}
+
+function GenerateSpecialFilters() {
+    var departmentCounter = Counter(employees.map(a => a.department));
+    var officeCounter = Counter(employees.map(a => a.office));
+    var jobTitleCounter = Counter(employees.map(a => a.jobTitle));
+
+    departmentList.innerHTML = "";
+    officeList.innerHTML = "";
+    jobTitleList.innerHTML = "";
+
+    for (const property in departmentCounter) {
+        var filter = document.createElement("li");
+        filter.innerHTML = String(property) + " (" + String(departmentCounter[property]) + ")";
+        filter.id = String(property) + "Filter";
+        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"Department\")");
+        document.getElementById("departmentList").appendChild(filter);
+    }
+
+    for (const property in officeCounter) {
+        var filter = document.createElement("li");
+        filter.innerHTML = String(property) + " (" + String(officeCounter[property]) + ")";
+        filter.id = String(property) + "Filter";
+        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"Office\")");
+        document.getElementById("officeList").appendChild(filter);
+    }
+
+    for (const property in jobTitleCounter) {
+        var filter = document.createElement("li");
+        filter.innerHTML = String(property) + " (" + String(jobTitleCounter[property]) + ")";
+        filter.id = String(property) + "Filter";
+        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"Job Title\")");
+        document.getElementById("jobTitleList").appendChild(filter);
+    }
+}
+
+function Counter(array) {
+    var count = {};
+    array.forEach(val => count[val] = (count[val] || 0) + 1);
+    return count;
+}
+
+function ClearKeywordField() {
+    document.getElementById('keywordTxt').value = "";
 }
