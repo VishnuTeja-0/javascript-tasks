@@ -33,11 +33,14 @@
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
-                    <button id= "AllBtn" onclick= "ShowAllEmployees()"><img src= "resources/user_icon.jpg" alt= "All"></button>
+                    <button id= "AllBtn" onclick= "ShowAllEmployees()">All</button>
                 </div>
                 <div id= "searchByKeyword">
                     <h5>Search</h5>
-                    <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                    <div class= "searchBar">
+                        <img src= "resources/search_icon.png" alt= "search">
+                        <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                    </div>
                     <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
                     <h5 id= "filterHeader">Filter by</h5>
                     <input id = 'filterSelector' list = "filterOptions">
@@ -61,10 +64,10 @@
         <div id = "addEmployeeModal" class = "modal">
             <div id = "addEmployeeForm" class= "modalContent">
                 <span class = "closeBtn" onclick= "CloseAddEmployeeForm()">&times;</span>
-                <h3>Employee Information</h3>
+                <h3>Add New Employee Information</h3>
                 <form>
                     <label for= "firstName">First Name : </label>
-                    <input type="text" id= "firstName"><br>
+                    <input type="text" id= "firstName" onkeyup= "AutofillPreferredName(String(this.value))")><br>
                     <div class= "errorMessage" id= "firstNameError"></div>
                     <label for= "lastName">Last Name : </label>
                     <input type="text" id= "lastName"><br>

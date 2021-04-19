@@ -172,7 +172,7 @@ function DisplayEmployeeCard(item) {
     employeePhoto.innerHTML = String(item.firstName[0] + item.lastName[0]);
     employeePhoto.className = 'employeePhoto';
 
-    var employeeDetails = document.createElement("div")
+    var employeeDetails = document.createElement("div");
     employeeDetails.className = 'employeeDetails';
 
     var employeeName = document.createElement("h5");
@@ -184,8 +184,19 @@ function DisplayEmployeeCard(item) {
     employeeDetails.appendChild(employeeJobTitle);
 
     var employeeDepartment = document.createElement("p");
-    employeeDepartment.innerHTML = item.department;
+    employeeDepartment.innerHTML = item.department + " Department";
     employeeDetails.appendChild(employeeDepartment);
+
+    var actionLinks = document.createElement("div");
+    actionLinks.className = 'actionLinks';
+    for (var i = 0; i < 5; i++) {
+        var link = document.createElement("div");
+        link.innerHTML = 'o';
+        link.className = 'link';
+        actionLinks.appendChild(link);
+    }
+
+    employeeDetails.appendChild(actionLinks);
 
     employeeCard.appendChild(employeePhoto);
     employeeCard.appendChild(employeeDetails);
@@ -312,4 +323,8 @@ function UpdateDetails(empId, buttonId, updatedValue) {
     document.getElementById(buttonId).style.display = "none";
     document.getElementById(property + "UpdatedMessage").style.display = "block";
     ShowAllEmployees();
+}
+
+function AutofillPreferredName(str){
+    document.getElementById('preferredName').value = str;
 }
