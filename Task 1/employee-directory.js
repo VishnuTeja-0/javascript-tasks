@@ -9,6 +9,7 @@ function InsertTestEmployeeRecords() {
 
 class Employee {
     constructor(firstName, lastName, prefferedName, email, jobTitle, office, department, phoneNumber, skypeId) {
+        this.employeeId = firstName[0] + lastName[0] + this.getDate();
         this.firstName = firstName;
         this.lastName = lastName;
         this.prefferedName = prefferedName;
@@ -18,6 +19,14 @@ class Employee {
         this.department = department;
         this.phoneNumber = phoneNumber;
         this.skypeId = skypeId;
+    }
+
+    getDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        return yyyy + mm + dd;
     }
 }
 
@@ -156,18 +165,32 @@ function ShowEmployeeByProperty(str, property) {
 
 function DisplayEmployeeCard(item) {
     var employeeCard = document.createElement("div");
+    employeeCard.className = 'card';
+    employeeCard.id = item.employeeId + 'Card';
 
-    var employeeName = document.createElement("h4");
+    var employeePhoto = document.createElement("div");
+    employeePhoto.innerHTML = String(item.firstName[0] + item.lastName[0]);
+    employeePhoto.className = 'employeePhoto';
+
+    var employeeDetails = document.createElement("div")
+    employeeDetails.className = 'employeeDetails';
+
+    var employeeName = document.createElement("h5");
     employeeName.innerHTML = item.firstName + " " + item.lastName;
-    employeeCard.appendChild(employeeName);
+    employeeDetails.appendChild(employeeName);
 
     var employeeJobTitle = document.createElement("p");
     employeeJobTitle.innerHTML = item.jobTitle;
-    employeeCard.appendChild(employeeJobTitle);
+    employeeDetails.appendChild(employeeJobTitle);
 
     var employeeDepartment = document.createElement("p");
     employeeDepartment.innerHTML = item.department;
-    employeeCard.appendChild(employeeDepartment);
+    employeeDetails.appendChild(employeeDepartment);
+
+    employeeCard.appendChild(employeePhoto);
+    employeeCard.appendChild(employeeDetails);
+
+    employeeCard.setAttribute('onclick', 'ShowEmployeeDetails(this.id)');
 
     document.getElementById("employeeCards").appendChild(employeeCard);
 }
@@ -226,4 +249,67 @@ function Counter(array) {
 
 function ClearKeywordField() {
     document.getElementById('keywordTxt').value = "";
+}
+
+function ShowAddEmployeeForm() {
+    document.getElementById("addEmployeeModal").style.display = "block";
+}
+
+function CloseAddEmployeeForm() {
+    document.getElementById("addEmployeeModal").style.display = "none";
+}
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById("addEmployeeModal")) {
+        document.getElementById("addEmployeeModal").style.display = "none";
+    }
+}
+
+function ShowEmployeeDetails(id) {
+    var successMessages = document.getElementsByClassName('successMessage');
+    var i;
+    for (i = 0; i < successMessages.length; i++) {
+        successMessages[i].style.display = "none";
+    }
+    document.getElementById("employeeDetailsModal").style.display = "block";
+    var employee = employees.find(i => i.employeeId === String(id).substring(0, String(id).length - 4));
+    document.getElementById('employeeIdDetails').value = employee.employeeId;
+    document.getElementById('firstNameDetails').value = employee.firstName;
+    document.getElementById('lastNameDetails').value = employee.lastName;
+    document.getElementById('preferredNameDetails').value = employee.preferredName;
+    document.getElementById('emailDetails').value = employee.email;
+    document.getElementById('jobTitleDetails').value = employee.jobTitle;
+    document.getElementById('officeDetails').value = employee.office;
+    document.getElementById('departmentDetails').value = employee.department;
+    document.getElementById('phoneNumberDetails').value = employee.phoneNumber;
+    document.getElementById('skypeIdDetails').value = employee.skypeId;
+}
+
+function CloseEmployeeDetails() {
+    document.getElementById("employeeDetailsModal").style.display = "none";
+}
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById("employeeDetailsModal")) {
+        document.getElementById("employeeDetailsModal").style.display = "none";
+    }
+}
+
+function EditDetails(fieldId) {
+    document.getElementById(fieldId).removeAttribute('readonly');
+    var buttonId = "update" + String(fieldId).substring(0, String(fieldId).length - 7) + "Btn";
+    document.getElementById(buttonId).style.display = "block";
+}
+
+function UpdateDetails(empId, buttonId, updatedValue) {
+    var property = String(buttonId).substring(6, String(buttonId).length - 3);
+    for (var i in employees) {
+        if (employees[i].employeeId == empId) {
+            employees[i][property] = updatedValue;
+            break;
+        }
+    }
+    document.getElementById(buttonId).style.display = "none";
+    document.getElementById(property + "UpdatedMessage").style.display = "block";
+    ShowAllEmployees();
 }

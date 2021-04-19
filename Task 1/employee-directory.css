@@ -4,6 +4,14 @@
     font-weight: 200;
 }
 
+.header {
+    padding-bottom: 15px;
+
+    border-bottom-style: solid;
+    border-bottom-color: rgba(215, 215, 215, 1);
+    border-bottom-width: 1px;
+}
+
 .header div {
     display: inline-block;
 }
@@ -28,16 +36,231 @@
 
 .user {
     float: right;
+    padding-top: 25px;
+    font-size: 90%;
+    margin-right: 10px;
 }
 
 .user * {
     display: inline-block;
 }
 
-.user h1 {
-    font-size: 180%;
+.employeePhoto {
+    padding: 16px 15px;
+    background-color: rgba(0,177,252,255);
+    color: white;
+}
+
+#userPhoto {
+    float:right;
+    margin-top: 3px;
 }
 
 .welcomeMessage {
     color: rgba(0,177,252,255);
+}
+
+.content {
+    margin-top: 30px;
+}
+
+.nav {
+    width: 20%;
+    float: left;
+}
+
+.directory{
+    width: 80%;
+    float:right;
+}
+
+.nav h5{
+    margin: 0;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 80%;
+    color: rgba(90, 90, 90, 1);
+}
+
+#letterFilters button{
+    height: 36px;
+    width: 36px;
+    margin-left: 2px;
+    color: white;
+    background-color: rgba(0,177,252,255);
+    border-style: none;
+}
+
+#AllBtn {
+    margin-left: 0px !important;
+    padding: 0 !important;
+}
+
+#AllBtn img {
+    height: 36px;
+    width: 36px;
+}
+
+#searchByKeyword {
+    display:inline-block;
+    float:left;
+}
+
+#searchByKeyword *{
+    display: inline-block;
+}
+
+#searchByKeyword h5{
+    margin: 25px 0 20px;
+}
+
+#keywordTxt {
+    padding: 5px 0;
+    margin-left: 5px;
+    background-image: url(resources/search_icon.png);
+}
+
+#clearBtn {
+    color: white;
+    background-color: rgba(105,186,0,255);
+    padding: 5px 15px;
+    margin-left: 25px;
+}
+
+#filterHeader {
+    margin-left: 40px !important;
+}
+
+#filterSelector {
+    padding: 7px 0;
+    margin-left: 5px;
+}
+
+#addEmployeeBtn {
+    float: right;
+    color: white;
+    background-color: rgba(0,177,252,255);
+    margin-top: 15px;
+    padding: 7px;
+    font-size: 100%;
+    border-style: none;
+}
+
+.directory small:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    margin: -145px -30px 0;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modalContent {
+    background-color: white;
+    margin: 5% auto;
+    width: 30%;
+    padding: 10px;
+}
+
+.modalContent input {
+    margin-top: 10px;
+}
+
+.modalContent h3 {
+    margin: 20px 0;
+}
+
+.closeBtn {
+    color: #aaaaaa;
+    float: right;
+    clear: left;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeBtn:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.submitBtn {
+    color: white;
+    background-color: rgba(0,177,252,255);
+    border-style: none;
+    padding: 10px;
+}
+
+#employeeCards{
+    margin-top: 10px;
+    padding: 15px 15px 180px;
+    border-style: solid;
+    border-color: rgba(215, 215, 215, 1);
+    border-width: 2px;
+}
+
+.card{
+    display: inline-block;
+    background-color: rgba(230, 230, 230, 1);
+    padding: 10px 30px 10px 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.card .employeePhoto {
+    float: left;
+}
+
+.card .employeeDetails{
+    float: right;
+    margin-left: 10px;
+}
+
+.card .employeeDetails h5 {
+    margin: 0 0 3px;
+    color: rgba(60, 60, 60, 1);
+}
+
+.card .employeeDetails p {
+    margin: 0;
+    font-size: 80%;
+    color: rgba(125, 125, 125, 1);
+}
+
+.card:hover{
+    cursor: pointer;
+    background-color: rgba(180, 180, 180, 1);
+}
+
+.nav ul li:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: rgba(90, 90, 90, 1);
+}
+
+#employeeIdDetails {
+    border-style: none;
+}
+
+.detailsSubmitBtn{
+    display:none;
+}
+
+#employeeDetailsForm small{
+    margin-top: 10px;
+}
+
+.successMessage{
+    display:none;
 }

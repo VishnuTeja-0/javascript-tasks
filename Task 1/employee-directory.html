@@ -14,84 +14,142 @@
     			<h1>Employee Directory</h1>
     			<h3>The Ultimate People Directory Experience</h3>
     		</div>
+            <div class= 'employeePhoto' id= 'userPhoto'>AP</div>
     		<div class = "user">
     			<h1><span class = "welcomeMessage">Welcome,</span> Andrew Philips</h1>
-    			<img src = "#" alt = "User">
     		</div>
     	</div>
     	<div class = "content">
     		<div class = "nav">
-    			<h4>Departments</h4>
+    			<h5>Departments</h5>
     			<ul id = "departmentList">
     			</ul>
-    			<h4>Offices</h4>
+    			<h5>Offices</h5>
     			<ul id = "officeList">
     			</ul>
-    			<h4>Job Titles</h4>
+    			<h5>Job Titles</h5>
     			<ul id = "jobTitleList">
     			</ul>
-    			<span>view more</span>
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
-                    <button id= "AllBtn" onclick= "ShowAllEmployees()"></button>
+                    <button id= "AllBtn" onclick= "ShowAllEmployees()"><img src= "resources/user_icon.jpg" alt= "All"></button>
                 </div>
-                <h5>Search</h5>
-                <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
-                <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
-                <h5>Filter by</h5>
-                <input id = 'filterSelector' list = "filterOptions">
-                <datalist id = "filterOptions">
-                    <option value = "First Name"></option>
-                    <option value = "Last Name"></option>
-                    <option value = "Preferred Name"></option>
-                    <option value = "Email"></option>
-                    <option value = "Job Title"></option>
-                    <option value = "Office"></option>
-                    <option value = "Department"></option>
-                    <option value = "Phone Number"></option>
-                    <option value = "Skype ID"></option>
-                </datalist>
-                <button id = "addEmployeeBtn" type = "button">Add Employee</button>
-                <div id = "addEmployeeModal" class = "modal">
-                    <div class = "modalContent">
-                        <span class = "closeBtn">&times;</span>
-                        <h3>Add New Employee Information</h3>
-                        <form>
-                            <label for= "firstName">First Name : </label>
-                            <input type="text" id= "firstName"><br>
-                            <div class= "errorMessage" id= "firstNameError"></div>
-                            <label for= "lastName">Last Name : </label>
-                            <input type="text" id= "lastName"><br>
-                            <div class= "errorMessage" id= "lastNameError"></div>
-                            <label for= "preferredName">Preferred Name : </label>
-                            <input type= "text" id= "preferredName"><br>
-                            <div class= "errorMessage" id= "preferredNameError"></div>
-                            <label for= "email">Email : </label>
-                            <input type= "email" id= "email" placeholder= "abc@example.com"><br>
-                            <div class= "errorMessage" id= "emailIdError"></div>
-                            <label for= "jobTitle">Job Title : </label>
-                            <input type= "text" id= "jobTitle"><br>
-                            <div class= "errorMessage" id= "jobTitleError"></div>
-                            <label for= "office">Office : </label>
-                            <input type= "text" id= "office"><br>
-                            <div class= "errorMessage" id= "officeError"></div>
-                            <label for= "department">Department : </label>
-                            <input type= "text" id= "department"><br>
-                            <div class= "errorMessage" id= "departmentError"></div>
-                            <label for= "phoneNumber">Phone Number : </label>
-                            <input type= "tel" id= "phoneNumber"><br>
-                            <div class= "errorMessage" id= "phoneNumberError"></div>
-                            <label for= "skypeId">Skype ID : </label>
-                            <input type= "text" id= "skypeId"><br>
-                            <div class= "errorMessage" id= "SkypeIdError"></div>
-                            <input type= "button" value= "Submit" onclick= "ValidateEmployeeDetails()">
-                            <div class= "successMessage" id= "employeeAddedMessage"></div>
-                        </form>
-                    </div>
+                <div id= "searchByKeyword">
+                    <h5>Search</h5>
+                    <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                    <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
+                    <h5 id= "filterHeader">Filter by</h5>
+                    <input id = 'filterSelector' list = "filterOptions">
+                    <datalist id = "filterOptions">
+                        <option value = "First Name"></option>
+                        <option value = "Last Name"></option>
+                        <option value = "Preferred Name"></option>
+                        <option value = "Email"></option>
+                        <option value = "Job Title"></option>
+                        <option value = "Office"></option>
+                        <option value = "Department"></option>
+                        <option value = "Phone Number"></option>
+                        <option value = "Skype ID"></option>
+                    </datalist>
                 </div>
+                <button id = "addEmployeeBtn" type = "button" onclick= "ShowAddEmployeeForm()">Add Employee</button>
                 <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>
                 <div id = "employeeCards"></div>
+            </div>
+        </div>
+        <div id = "addEmployeeModal" class = "modal">
+            <div id = "addEmployeeForm" class= "modalContent">
+                <span class = "closeBtn" onclick= "CloseAddEmployeeForm()">&times;</span>
+                <h3>Employee Information</h3>
+                <form>
+                    <label for= "firstName">First Name : </label>
+                    <input type="text" id= "firstName"><br>
+                    <div class= "errorMessage" id= "firstNameError"></div>
+                    <label for= "lastName">Last Name : </label>
+                    <input type="text" id= "lastName"><br>
+                    <div class= "errorMessage" id= "lastNameError"></div>
+                    <label for= "preferredName">Preferred Name : </label>
+                    <input type= "text" id= "preferredName"><br>
+                    <div class= "errorMessage" id= "preferredNameError"></div>
+                    <label for= "email">Email : </label>
+                    <input type= "email" id= "email" placeholder= "abc@example.com"><br>
+                    <div class= "errorMessage" id= "emailIdError"></div>
+                    <label for= "jobTitle">Job Title : </label>
+                    <input type= "text" id= "jobTitle"><br>
+                    <div class= "errorMessage" id= "jobTitleError"></div>
+                    <label for= "office">Office : </label>
+                    <input type= "text" id= "office"><br>
+                    <div class= "errorMessage" id= "officeError"></div>
+                    <label for= "department">Department : </label>
+                    <input type= "text" id= "department"><br>
+                    <div class= "errorMessage" id= "departmentError"></div>
+                    <label for= "phoneNumber">Phone Number : </label>
+                    <input type= "tel" id= "phoneNumber"><br>
+                    <div class= "errorMessage" id= "phoneNumberError"></div>
+                    <label for= "skypeId">Skype ID : </label>
+                    <input type= "text" id= "skypeId"><br>
+                    <div class= "errorMessage" id= "SkypeIdError"></div>
+                    <input class = "submitBtn" type= "button" value= "Submit" onclick= "ValidateEmployeeDetails()">
+                    <div class= "successMessage" id= "employeeAddedMessage"></div>
+                </form>
+            </div>
+        </div>
+        <div id= "employeeDetailsModal" class= "modal">
+            <div id = "employeeDetailsForm" class= "modalContent">
+                <span class = "closeBtn" onclick= "CloseEmployeeDetails()">&times;</span>
+                <h3>Employee Information</h3>
+                <form>
+                    <label for= "employeeIdDetails">Employee ID : </label>
+                    <input type="text" id= "employeeIdDetails" readonly><br>
+                    
+                    <label for= "firstNameDetails">First Name : </label>
+                    <input type="text" id= "firstNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updatefirstNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#firstNameDetails').value))">
+                    <div class= "successMessage" id= "firstNameUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "lastNameDetails">Last Name : </label>
+                    <input type="text" id= "lastNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updatelastNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#lastNameDetails').value))">
+                    <div class= "successMessage" id= "lastNameUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "preferredNameDetails">Preferred Name : </label>
+                    <input type= "text" id= "preferredNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updatepreferredNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#preferredNameDetails').value))">
+                    <div class= "successMessage" id= "preferredNameUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "emailDetails">Email : </label>
+                    <input type= "email" id= "emailDetails" placeholder= "abc@example.com" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updateemailBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#emailDetails').value))">
+                    <div class= "successMessage" id= "emailUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "jobTitleDetails">Job Title : </label>
+                    <input type= "text" id= "jobTitleDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updatejobTitleBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#jobTitleDetails').value))">
+                    <div class= "successMessage" id= "jobTitleUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "officeDetails">Office : </label>
+                    <input type= "text" id= "officeDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updateofficeBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#officeDetails').value))">
+                    <div class= "successMessage" id= "officeUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "departmentDetails">Department : </label>
+                    <input type= "text" id= "departmentDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updateDepartmentBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#departmentDetails').value))">
+                    <div class= "successMessage" id= "departmentUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "phoneNumberDetails">Phone Number : </label>
+                    <input type= "tel" id= "phoneNumberDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updatephoneNumberBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#phoneNumberDetails').value))">
+                    <div class= "successMessage" id= "phoneNumberUpdatedMessage">Updated Successfully!</div>
+
+                    <label for= "skypeIdDetails">Skype ID : </label>
+                    <input type= "text" id= "skypeIdDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
+                    <input type = "button" id = "updateskypeIdBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#skypeIdDetails').value))">
+                    <div class= "successMessage" id= "skypeIdUpdatedMessage">Updated Successfully!</div>
+
+                </form>
+                <small>Double click on field to update details</small>
             </div>
         </div>
         <script src = "employee-directory.js"></script>
