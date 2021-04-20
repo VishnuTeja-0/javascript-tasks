@@ -138,7 +138,8 @@
 #clearBtn {
     color: white;
     background-color: rgba(105,186,0,255);
-    padding: 7px 15px;
+    padding: 7\
+        px 15px;
     margin-left: 25px;
     border-style: none;
 }

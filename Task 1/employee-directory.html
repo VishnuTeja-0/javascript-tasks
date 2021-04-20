@@ -43,18 +43,17 @@
                     </div>
                     <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
                     <h5 id= "filterHeader">Filter by</h5>
-                    <input id = 'filterSelector' list = "filterOptions">
-                    <datalist id = "filterOptions">
-                        <option value = "First Name"></option>
-                        <option value = "Last Name"></option>
-                        <option value = "Preferred Name"></option>
-                        <option value = "Email"></option>
-                        <option value = "Job Title"></option>
-                        <option value = "Office"></option>
-                        <option value = "Department"></option>
-                        <option value = "Phone Number"></option>
-                        <option value = "Skype ID"></option>
-                    </datalist>
+                    <select id = 'filterSelector'>
+                        <option value = "firstName" selected>First Name</option>
+                        <option value = "lastName">Last Name</option>
+                        <option value = "preferredName">Preferred Name</option>
+                        <option value = "email">Email</option>
+                        <option value = "jobTitle">Job Title</option>
+                        <option value = "office">Office</option>
+                        <option value = "department">Department</option>
+                        <option value = "phoneNumber">Phone Number</option>
+                        <option value = "skypeId">Skype ID</option>
+                    </select>
                 </div>
                 <button id = "addEmployeeBtn" type = "button" onclick= "ShowAddEmployeeForm()">Add Employee</button>
                 <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>

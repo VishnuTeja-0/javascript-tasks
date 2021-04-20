@@ -129,36 +129,7 @@ function ShowEmployeeByLetter(str) {
 
 function ShowEmployeeByProperty(str, property) {
     document.getElementById("employeeCards").innerHTML = "";
-    var employeeProperty;
-    switch (property) {
-        case "First Name":
-            employeeProperty = 'firstName';
-            break;
-        case "Last Name":
-            employeeProperty = 'lastName';
-            break;
-        case "Preferred Name":
-            employeeProperty = 'preferredName';
-            break;
-        case "Email":
-            employeeProperty = 'email';
-            break;
-        case "Job Title":
-            employeeProperty = 'jobTitle';
-            break;
-        case "Office":
-            employeeProperty = 'office';
-            break;
-        case "Department":
-            employeeProperty = 'department';
-            break;
-        case "Phone Number":
-            employeeProperty = 'phoneNumber';
-            break;
-        case "Skype ID":
-            employeeProperty = 'skypeId';
-            break;
-    }
+    var employeeProperty = property;
     var filteredEmployees = employees.filter(FilterEmployeeByProperty(str, employeeProperty));
     filteredEmployees.forEach(DisplayEmployeeCard);
 }
