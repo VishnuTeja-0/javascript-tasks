@@ -287,34 +287,30 @@ function GenerateSpecialFilters() {
     departmentList.innerHTML = "";
     officeList.innerHTML = "";
     jobTitleList.innerHTML = "";
-
     for (const property in departmentCounter) {
         var filter = document.createElement("li");
         filter.innerHTML = String(property) + " (" + String(departmentCounter[property]) + ")";
         filter.id = String(property) + "Filter";
-        filter.className = "departmentFilter ";
+        filter.className = "departmentFilter specialFilter";
         filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"department\")");
         document.getElementById("departmentList").appendChild(filter);
     }
-
     for (const property in officeCounter) {
         var filter = document.createElement("li");
         filter.innerHTML = String(property) + " (" + String(officeCounter[property]) + ")";
         filter.id = String(property) + "Filter";
-        filter.className = "officeFilter";
+        filter.className = "officeFilter specialFilter";
         filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"office\")");
         document.getElementById("officeList").appendChild(filter);
     }
-
     for (const property in jobTitleCounter) {
         var filter = document.createElement("li");
         filter.innerHTML = String(property) + " (" + String(jobTitleCounter[property]) + ")";
         filter.id = String(property) + "Filter";
-        filter.className = "jobTitleFilter";
+        filter.className = "jobTitleFilter specialFilter";
         filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"jobTitle\")");
         document.getElementById("jobTitleList").appendChild(filter);
     }
-    HideSpecialFilters();
 }
 
 function Counter(array) {
@@ -425,16 +421,22 @@ function AutofillPreferredName(str){
     document.getElementById('preferredName').value = String(str);
 }
 
-function HideSpecialFilters() {
-    var filterLists = document.querySelector('.nav').querySelectorAll('ul');
-    for (var i = 0; i < filterLists.length; i++) {
-        var filters = filterLists[i].querySelectorAll('li');
-        for (var j = 5; j < filters.length; j++) {
-            filters[j].classList.add = "hidden-item";
-        }
+function ViewMoreItems(btnId) {
+    var listId = String(btnId).substring(0, String(btnId).length - 11) + "List";
+    var listItems = document.getElementById(listId).querySelectorAll('li');
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].classList.remove('specialFilter');
     }
+    document.getElementById(btnId).innerHTML = "Show Less";
+    document.getElementById(btnId).setAttribute("onclick", "ViewLessItems(String(this.id))");
 }
 
-function ViewMoreItems(listId) {
-
+function ViewLessItems(btnId) {
+    var listId = String(btnId).substring(0, String(btnId).length - 11) + "List";
+    var listItems = document.getElementById(listId).querySelectorAll('li');
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].classList.add('specialFilter');
+    }
+    document.getElementById(btnId).innerHTML = "Show More";
+    document.getElementById(btnId).setAttribute("onclick", "ViewMoreItems(String(this.id))");
 }
