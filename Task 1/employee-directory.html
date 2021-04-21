@@ -4,6 +4,7 @@
     	<meta charset = "utf-8">
     	<title>Saketa</title>
         <link rel = "stylesheet" href= "employee-directory.css">
+        <script src="https://use.fontawesome.com/24c5bafea1.js"></script>
     </head>
     <body onload = "LoadLetterFilters(); LoadEmployeeList(); InsertTestEmployeeRecords(); ShowAllEmployees(); GenerateSpecialFilters()">
     	<div class = "header">
@@ -24,12 +25,15 @@
     			<h5>Departments</h5>
     			<ul id = "departmentList">
     			</ul>
+                <span class= "viewMoreBtn" onclick= "ViewMoreItems()">Show More</span>
     			<h5>Offices</h5>
     			<ul id = "officeList">
     			</ul>
+                <span class= "viewMoreBtn" onclick= "ViewMoreItems()">Show More</span>
     			<h5>Job Titles</h5>
     			<ul id = "jobTitleList">
     			</ul>
+                <span class= "viewMoreBtn" onclick= "ViewMoreItems()">Show More</span>
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
@@ -57,7 +61,8 @@
                 </div>
                 <button id = "addEmployeeBtn" type = "button" onclick= "ShowAddEmployeeForm()">Add Employee</button>
                 <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>
-                <div id = "employeeCards"></div>
+                <div id = "employeeCards">
+                </div>
             </div>
         </div>
         <div id = "addEmployeeModal" class = "modal">
@@ -65,33 +70,37 @@
                 <span class = "closeBtn" onclick= "CloseAddEmployeeForm()">&times;</span>
                 <h3>Add New Employee Information</h3>
                 <form>
-                    <label for= "firstName">First Name : </label>
-                    <input type="text" id= "firstName" onkeyup= "AutofillPreferredName(String(this.value))")><br>
-                    <div class= "errorMessage" id= "firstNameError"></div>
-                    <label for= "lastName">Last Name : </label>
-                    <input type="text" id= "lastName"><br>
-                    <div class= "errorMessage" id= "lastNameError"></div>
-                    <label for= "preferredName">Preferred Name : </label>
-                    <input type= "text" id= "preferredName"><br>
-                    <div class= "errorMessage" id= "preferredNameError"></div>
-                    <label for= "email">Email : </label>
-                    <input type= "email" id= "email" placeholder= "abc@example.com"><br>
-                    <div class= "errorMessage" id= "emailIdError"></div>
-                    <label for= "jobTitle">Job Title : </label>
-                    <input type= "text" id= "jobTitle"><br>
-                    <div class= "errorMessage" id= "jobTitleError"></div>
-                    <label for= "office">Office : </label>
-                    <input type= "text" id= "office"><br>
-                    <div class= "errorMessage" id= "officeError"></div>
-                    <label for= "department">Department : </label>
-                    <input type= "text" id= "department"><br>
-                    <div class= "errorMessage" id= "departmentError"></div>
-                    <label for= "phoneNumber">Phone Number : </label>
-                    <input type= "tel" id= "phoneNumber"><br>
-                    <div class= "errorMessage" id= "phoneNumberError"></div>
-                    <label for= "skypeId">Skype ID : </label>
-                    <input type= "text" id= "skypeId"><br>
-                    <div class= "errorMessage" id= "SkypeIdError"></div>
+                    <div class= "formLabels">
+                        <label for= "firstName">First Name : </label>
+                        <label for= "lastName">Last Name : </label>
+                        <label for= "preferredName">Preferred Name : </label>
+                        <label for= "email">Email : </label>
+                        <label for= "jobTitle">Job Title : </label>
+                        <label for= "office">Office : </label>
+                        <label for= "department">Department : </label>
+                        <label for= "phoneNumber">Phone Number : </label>
+                        <label for= "skypeId">Skype ID : </label>
+                    </div>
+                    <div class= "formFields">
+                        <input type="text" id= "firstName" class= "addField" onkeyup= "AutofillPreferredName(String(this.value))")>
+                        <span class= "errorSign" id= "firstNameError"></span>
+                        <input type="text" id= "lastName" class= "addField">
+                        <span class= "errorSign" id= "lastNameError"></span>
+                        <input type= "text" id= "preferredName" class= "addField">
+                        <span class= "errorSign" id= "preferredNameError"></span>
+                        <input type= "email" id= "email" placeholder= "abc@example.com" class= "addField">
+                        <span class= "errorSign" id= "emailIdError"></span>
+                        <input type= "text" id= "jobTitle" class= "addField">
+                        <span class= "errorSign" id= "jobTitleError"></span>
+                        <input type= "text" id= "office" class= "addField">
+                        <span class= "errorSign" id= "officeError"></span>
+                        <input type= "text" id= "department" class= "addField">
+                        <span class= "errorSign" id= "departmentError"></span>
+                        <input type= "tel" id= "phoneNumber" class= "addField">
+                        <span class= "errorSign" id= "phoneNumberError"></span>
+                        <input type= "text" id= "skypeId" class= "addField">
+                        <span class= "errorSign" id= "skypeIdError"></span>
+                    </div>
                     <input class = "submitBtn" type= "button" value= "Submit" onclick= "ValidateEmployeeDetails()">
                     <div class= "successMessage" id= "employeeAddedMessage"></div>
                 </form>
@@ -102,53 +111,32 @@
                 <span class = "closeBtn" onclick= "CloseEmployeeDetails()">&times;</span>
                 <h3>Employee Information</h3>
                 <form>
-                    <label for= "employeeIdDetails">Employee ID : </label>
-                    <input type="text" id= "employeeIdDetails" readonly><br>
-                    
-                    <label for= "firstNameDetails">First Name : </label>
-                    <input type="text" id= "firstNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updatefirstNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#firstNameDetails').value))">
-                    <div class= "successMessage" id= "firstNameUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "lastNameDetails">Last Name : </label>
-                    <input type="text" id= "lastNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updatelastNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#lastNameDetails').value))">
-                    <div class= "successMessage" id= "lastNameUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "preferredNameDetails">Preferred Name : </label>
-                    <input type= "text" id= "preferredNameDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updatepreferredNameBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#preferredNameDetails').value))">
-                    <div class= "successMessage" id= "preferredNameUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "emailDetails">Email : </label>
-                    <input type= "email" id= "emailDetails" placeholder= "abc@example.com" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updateemailBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#emailDetails').value))">
-                    <div class= "successMessage" id= "emailUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "jobTitleDetails">Job Title : </label>
-                    <input type= "text" id= "jobTitleDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updatejobTitleBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#jobTitleDetails').value))">
-                    <div class= "successMessage" id= "jobTitleUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "officeDetails">Office : </label>
-                    <input type= "text" id= "officeDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updateofficeBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#officeDetails').value))">
-                    <div class= "successMessage" id= "officeUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "departmentDetails">Department : </label>
-                    <input type= "text" id= "departmentDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updateDepartmentBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#departmentDetails').value))">
-                    <div class= "successMessage" id= "departmentUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "phoneNumberDetails">Phone Number : </label>
-                    <input type= "tel" id= "phoneNumberDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updatephoneNumberBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#phoneNumberDetails').value))">
-                    <div class= "successMessage" id= "phoneNumberUpdatedMessage">Updated Successfully!</div>
-
-                    <label for= "skypeIdDetails">Skype ID : </label>
-                    <input type= "text" id= "skypeIdDetails" ondblclick= "EditDetails(String(this.id))" readonly><br>
-                    <input type = "button" id = "updateskypeIdBtn" class = "submitBtn detailsSubmitBtn" value= "Submit" onclick= "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), String(this.id), String(document.querySelector('#skypeIdDetails').value))">
-                    <div class= "successMessage" id= "skypeIdUpdatedMessage">Updated Successfully!</div>
+                    <div class= "formLabels">
+                        <label for= "employeeIdDetails">Employee ID : </label>
+                        <label for= "firstNameDetails">First Name : </label>
+                        <label for= "lastNameDetails">Last Name : </label>
+                        <label for= "preferredNameDetails">Preferred Name : </label>
+                        <label for= "emailDetails">Email : </label>
+                        <label for= "jobTitleDetails">Job Title : </label>
+                        <label for= "officeDetails">Office : </label>
+                        <label for= "departmentDetails">Department : </label>
+                        <label for= "phoneNumberDetails">Phone Number : </label>
+                        <label for= "skypeIdDetails">Skype ID : </label>
+                    </div>
+                    <div class= "formFields">
+                        <input type="text" id= "employeeIdDetails" readonly><br>
+                        <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                    </div>                  
+                    <input type = "button" id = "updateBtn" class = "submitBtn" value= "Submit" readonly>
+                    <div class= "successMessage" id= "updatedMessage">Updated Successfully!</div>
 
                 </form>
                 <small>Double click on field to update details</small>
