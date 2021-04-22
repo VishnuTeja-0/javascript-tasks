@@ -215,7 +215,7 @@
     overflow: hidden;
     margin: 6% auto;
     width: 40%;
-    padding: 20px;
+    padding: 20px 20px 60px;
     position: relative;
 }
 
@@ -250,7 +250,7 @@
 }
 
 .modalContent h3 {
-    margin: 20px 0;
+    margin: 0 0 20px;
 }
 
 .closeBtn {
@@ -259,6 +259,9 @@
     clear: left;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 .closeBtn:hover{
@@ -272,8 +275,8 @@
     border-style: none;
     padding: 10px;
     position: absolute;
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
 }
 
 .submitBtn:hover{
@@ -370,6 +373,6 @@
     font-size: 20px;
 }
 
-#officeList .specialFilter:nth-of-type(1n+6) {
+.nav ul .specialFilter:nth-of-type(1n+6) {
     display: none;
 }

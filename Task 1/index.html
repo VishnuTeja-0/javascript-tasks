@@ -6,7 +6,7 @@
         <link rel = "stylesheet" href= "styles/index.css">
         <script src="https://use.fontawesome.com/24c5bafea1.js"></script>
     </head>
-    <body onload = "LoadLetterFilters(); LoadEmployeeList(); InsertTestEmployeeRecords(); ShowAllEmployees(); GenerateSpecialFilters()">
+    <body onload = "loadLetterFilters(); loadEmployeeList(); insertTestEmployeeRecords(); showAllEmployees(); generateSpecialFilters()">
     	<div class = "header">
     		<div class = "logo">
     			<img src = "images/logo.png" alt = "Saketa">
@@ -25,27 +25,27 @@
     			<h5>Departments</h5>
     			<ul id = "departmentList">
     			</ul>
-                <span class= "viewMoreBtn" id= "departmentViewMoreBtn" onclick= "ViewMoreItems(String(this.id))">Show More</span>
+                <span class= "viewMoreBtn" id= "departmentViewMoreBtn" onclick= "viewMoreItems(String(this.id))">Show More</span>
     			<h5>Offices</h5>
     			<ul id = "officeList">
     			</ul>
-                <span class= "viewMoreBtn" id= "officeViewMoreBtn" onclick= "ViewMoreItems(String(this.id))">Show More</span>
+                <span class= "viewMoreBtn" id= "officeViewMoreBtn" onclick= "viewMoreItems(String(this.id))">Show More</span>
     			<h5>Job Titles</h5>
     			<ul id = "jobTitleList">
     			</ul>
-                <span class= "viewMoreBtn" id= "jobTitleViewMoreBtn" onclick= "ViewMoreItems(String(this.id))">Show More</span>
+                <span class= "viewMoreBtn" id= "jobTitleViewMoreBtn" onclick= "viewMoreItems(String(this.id))">Show More</span>
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
-                    <button id= "AllBtn" onclick= "ShowAllEmployees()"><i class='fa fa-user' aria-hidden='true'></i></button>
+                    <button id= "AllBtn" onclick= "showAllEmployees()"><i class='fa fa-user' aria-hidden='true'></i></button>
                 </div>
                 <div id= "searchByKeyword">
                     <h5>Search</h5>
                     <div class= "searchBar">
                         <img src= "images/search_icon.png" alt= "search">
-                        <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "ShowEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                        <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "showEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
                     </div>
-                    <input id = "clearBtn" type = "button" value = "Clear" onclick= "ShowAllEmployees(); ClearKeywordField()">
+                    <input id = "clearBtn" type = "button" value = "Clear" onclick= "showAllEmployees(); clearKeywordField()">
                     <h5 id= "filterHeader">Filter by</h5>
                     <select id = 'filterSelector'>
                         <option value = "firstName" selected>First Name</option>
@@ -59,7 +59,7 @@
                         <option value = "skypeId">Skype ID</option>
                     </select>
                 </div>
-                <button id = "addEmployeeBtn" type = "button" onclick= "ShowAddEmployeeForm()">Add Employee</button>
+                <button id = "addEmployeeBtn" type = "button" onclick= "showAddEmployeeForm()">Add Employee</button>
                 <small><b>Note:</b> Please use the advanced filter options to refine your results.</small>
                 <div id = "employeeCards">
                 </div>
@@ -67,7 +67,7 @@
         </div>
         <div id = "addEmployeeModal" class = "modal">
             <div id = "addEmployeeForm" class= "modalContent">
-                <span class = "closeBtn" onclick= "CloseAddEmployeeForm()">&times;</span>
+                <span class = "closeBtn" onclick= "closeAddEmployeeForm()">&times;</span>
                 <h3>Add New Employee Information</h3>
                 <form>
                     <div class= "formLabels">
@@ -82,7 +82,7 @@
                         <label for= "skypeId">Skype ID : </label>
                     </div>
                     <div class= "formFields">
-                        <input type="text" id= "firstName" class= "addField" onkeyup= "AutofillPreferredName(String(this.value))")>
+                        <input type="text" id= "firstName" class= "addField" onkeyup= "autofillPreferredName(String(this.value))")>
                         <span class= "errorSign" id= "firstNameError"></span>
                         <input type="text" id= "lastName" class= "addField">
                         <span class= "errorSign" id= "lastNameError"></span>
@@ -101,15 +101,15 @@
                         <input type= "text" id= "skypeId" class= "addField">
                         <span class= "errorSign" id= "skypeIdError"></span>
                     </div>
-                    <input class = "submitBtn" type= "button" value= "Submit" onclick= "ValidateEmployeeDetails()">
-                    <div class= "successMessage" id= "employeeAddedMessage"></div>
+                    <input class = "submitBtn" type= "button" value= "Submit" onclick= "validateEmployeeDetails()">
+                    <div class= "successMessage" id= "employeeAddedMessage">Employee successfully added to directory!</div>
                 </form>
             </div>
         </div>
         <div id= "employeeDetailsModal" class= "modal">
             <div id = "employeeDetailsForm" class= "modalContent">
-                <span class = "closeBtn" onclick= "CloseEmployeeDetails()">&times;</span>
-                <h3>Employee Information</h3>
+                <span class = "closeBtn" onclick= "closeEmployeeDetails()">&times;</span>
+                <h3>Update Employee Information</h3>
                 <form>
                     <div class= "formLabels">
                         <label for= "employeeIdDetails">Employee ID : </label>
@@ -125,15 +125,15 @@
                     </div>
                     <div class= "formFields">
                         <input type="text" id= "employeeIdDetails" readonly><br>
-                        <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
-                        <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "EditDetails(String(this.id))" readonly>
+                        <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                        <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
                     </div>                  
                     <input type = "button" id = "updateBtn" class = "submitBtn" value= "Submit" readonly>
                     <div class= "successMessage" id= "updatedMessage">Updated Successfully!</div>

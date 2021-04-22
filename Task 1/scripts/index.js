@@ -1,63 +1,55 @@
 var employees;
 
-function InsertTestEmployeeRecords() {
-    var employee1 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Hyderabad", "Product Engineering", "7042687411", "ffad");
-    var employee3 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Delhi", "Product Engineering", "7042687411", "ffad");
-    var employee4 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Mumbai", "Product Engineering", "7042687411", "ffad");
-    var employee5 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Bangalore", "Product Engineering", "7042687411", "ffad");
-    var employee6 = new Employee("Vishnu", "Teja", "Vishnu", "vishnu.9999.l5@gmail.com", "Intern", "Kolkata", "Product Engineering", "7042687411", "ffad");
-    var employee2 = new Employee("Krishna", "Aditya", "Krishna", "baenus2003@gmail.com", "Intern", "Seattle", "Product Engineering", "8368290428", "gggg");
+function insertTestEmployeeRecords() {
+    var employee1 = new Employee({ firstName: "Vishnu", lastName: "Teja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern", office: "Hyderabad", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee1);
+    var employee2 = new Employee({ firstName: "Bishnu", lastName: "Yeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Bangalore", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee2);
+    var employee3 = new Employee({ firstName: "Kishnu", lastName: "Ueja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Mumbai", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee3);
+    var employee4 = new Employee({ firstName: "Pishnu", lastName: "Ieja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Delhi", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee4);
+    var employee5 = new Employee({ firstName: "Eishnu", lastName: "Oeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern5", office: "Kolkata", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee5);
+    var employee6 = new Employee({ firstName: "Aishnu", lastName: "Peja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern6", office: "Seattle", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });  
     employees.push(employee6);
 }
 
 class Employee {
-    constructor(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId) {
-        this.employeeId = firstName[0] + lastName[0] + this.getDate();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.preferredName = preferredName;
-        this.email = email;
-        this.jobTitle = jobTitle;
-        this.office = office;
-        this.department = department;
-        this.phoneNumber = phoneNumber;
-        this.skypeId = skypeId;
-    }
-
-    getDate() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        return yyyy + mm + dd;
+    constructor(employeeDetails) {
+        this.employeeId = employees.length + 1;
+        this.firstName = employeeDetails.firstName;
+        this.lastName = employeeDetails.lastName;
+        this.preferredName = employeeDetails.preferredName;
+        this.email = employeeDetails.email;
+        this.jobTitle = employeeDetails.jobTitle;
+        this.office = employeeDetails.office;
+        this.department = employeeDetails.department;
+        this.phoneNumber = employeeDetails.phoneNumber;
+        this.skypeId = employeeDetails.skypeId;
     }
 }
 
-function LoadLetterFilters() {
+function loadLetterFilters() {
     var container = document.getElementById("letterFilters");
     for (var i = 65; i <= 90; i++) {
         var letter = String.fromCharCode(i);
         var btn = document.createElement("button");
         btn.innerHTML = letter;
         btn.id = letter + "Btn";
-        btn.setAttribute("onclick", "ShowEmployeeByLetter(String(this.id))");
+        btn.setAttribute("onclick", "showEmployeeByLetter(String(this.id))");
         container.appendChild(btn);
     }
 }
 
-function LoadEmployeeList() {
+function loadEmployeeList() {
     employees = new Array();
 }
 
-function ValidateEmployeeDetails() {
+function validateEmployeeDetails() {
     var errorFlag = false;
     var firstName = document.getElementById('firstName').value;
-    if (!IsAlphabetic(firstName)) {
+    if (!isAlphabetic(firstName)) {
         firstNameError.innerHTML = "&times;";
         document.getElementById("firstName").style.borderColor = "red";
         errorFlag = true;
@@ -68,7 +60,7 @@ function ValidateEmployeeDetails() {
         errorFlag = false;
     }   
     var lastName = document.getElementById('lastName').value; 
-    if (!IsAlphabetic(lastName)) {
+    if (!isAlphabetic(lastName)) {
         lastNameError.innerHTML = "&times;";
         document.getElementById("lastName").style.borderColor = "red";
         errorFlag = true;
@@ -79,7 +71,7 @@ function ValidateEmployeeDetails() {
         errorFlag = false;
     }
     var preferredName = document.getElementById('preferredName').value;
-    if (!IsAlphabetic(preferredName)) {
+    if (!isAlphabetic(preferredName)) {
         preferredNameError.innerHTML = "&times;";
         document.getElementById("preferredName").style.borderColor = "red";
         errorFlag = true;
@@ -90,7 +82,7 @@ function ValidateEmployeeDetails() {
         errorFlag = false;
     }
     var email = document.getElementById('email').value;
-    if (!IsEmail(email)) {
+    if (!isEmail(email)) {
         emailIdError.innerHTML = "&times;";
         document.getElementById("email").style.borderColor = "red";
         errorFlag = true;
@@ -134,7 +126,7 @@ function ValidateEmployeeDetails() {
         errorFlag = false;
     }   
     var phoneNumber = document.getElementById('phoneNumber').value;
-    if (!IsPhoneNumber(phoneNumber)) {
+    if (!isPhoneNumber(phoneNumber)) {
         phoneNumberError.innerHTML = "&times;";
         document.getElementById("phoneNumber").style.borderColor = "red";
         errorFlag = true;
@@ -159,71 +151,82 @@ function ValidateEmployeeDetails() {
         return;
     }
     else {
-        AddEmployee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId);
-        GenerateSpecialFilters();
+        var employeeDetails = {
+            firstName: firstName,
+            lastName: lastName,
+            preferredName: preferredName,
+            email: email,
+            jobTitle: jobTitle,
+            office: office,
+            department: department,
+            phoneNumber: phoneNumber,
+            skypeId: skypeId
+        };
+        addEmployee(employeeDetails);
+        generateSpecialFilters();
     }  
 }
 
-function IsAlphabetic(str) {
+function isAlphabetic(str) {
     return /^[a-zA-Z]+$/.test(str);
 }
 
-function IsEmail(str) {
+function isEmail(str) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(str);
 }
 
-function IsPhoneNumber(str) {
+function isPhoneNumber(str) {
     return /^[0]?[789]\d{9}$/.test(str);
 }
 
-function AddEmployee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId) {
-    let employee = new Employee(firstName, lastName, preferredName, email, jobTitle, office, department, phoneNumber, skypeId);
+function addEmployee(employeeDetails) {
+    let employee = new Employee(employeeDetails);
     employees.push(employee);
-    employeeAddedMessage.innerHTML = "Employee successfully added to directory!";
-    setTimeout(CloseAddEmployeeForm, 2000);
-    ShowAllEmployees();
+    employeeAddedMessage.style.display = "block";
+    setTimeout(closeAddEmployeeForm, 2000);
+    showAllEmployees();
 }
 
-function ShowAllEmployees() {
+function showAllEmployees() {
     document.getElementById("employeeCards").innerHTML = "";
     if (employees.length == 0) {
         document.getElementById("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
-        employees.forEach(DisplayEmployeeCard);
+        employees.forEach(displayEmployeeCard);
     }   
 }
 
-function ShowEmployeeByLetter(str) {
+function showEmployeeByLetter(str) {
     document.getElementById("employeeCards").innerHTML = "";
-    var filteredEmployees = employees.filter(FilterEmployeeByLetter(str[0]));
+    var filteredEmployees = employees.filter(filterEmployeeByLetter(str[0]));
     if (filteredEmployees.length == 0) {
         document.getElementById("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
-        filteredEmployees.forEach(DisplayEmployeeCard);
+        filteredEmployees.forEach(displayEmployeeCard);
     }   
 }
 
-function ShowEmployeeByProperty(str, property) {
+function showEmployeeByProperty(str, property) {
     document.getElementById("employeeCards").innerHTML = "";
-    var filteredEmployees = employees.filter(FilterEmployeeByProperty(str, property));
+    var filteredEmployees = employees.filter(filterEmployeeByProperty(str, property));
     if (filteredEmployees.length === 0) {
         document.getElementById("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
-        filteredEmployees.forEach(DisplayEmployeeCard);
+        filteredEmployees.forEach(displayEmployeeCard);
     }
 }
 
-function DisplayEmployeeCard(item) {
+function displayEmployeeCard(item) {
     var employeeCard = document.createElement("div");
     employeeCard.className = 'card';
-    employeeCard.id = item.employeeId + 'Card';
+    employeeCard.id = String(item.employeeId) + 'Card';
 
 
     var employeePhoto = document.createElement("div");
@@ -259,38 +262,62 @@ function DisplayEmployeeCard(item) {
     employeeCard.appendChild(employeePhoto);
     employeeCard.appendChild(employeeDetails);
 
-    employeeCard.setAttribute('onclick', 'ShowEmployeeDetails(this.id)');
+    employeeCard.setAttribute('onclick', 'showEmployeeDetails(this.id)');
 
     document.getElementById("employeeCards").appendChild(employeeCard);
 }
 
-function FilterEmployeeByLetter(str) {
+function filterEmployeeByLetter(str) {
     return function (item) {
         return item.firstName[0] === str;
     }
 }
 
-function FilterEmployeeByProperty(str, property) {
+function filterEmployeeByProperty(str, property) {
     return function (item) {
         return String(item[property]).toUpperCase().startsWith(str.toUpperCase()); 
     }
 }
 
-function GenerateSpecialFilters() {
-    var departmentCounter = Counter(employees.map(a => a.department));
-    var officeCounter = Counter(employees.map(a => a.office));
-    var jobTitleCounter = Counter(employees.map(a => a.jobTitle));
+function generateSpecialFilters() {
+    var departmentCounter = counter(employees.map(a => a.department));
+    var officeCounter = counter(employees.map(a => a.office));
+    var jobTitleCounter = counter(employees.map(a => a.jobTitle));
 
     departmentList.innerHTML = "";
+    if (Object.keys(departmentCounter).length < 6) {
+        document.getElementById('departmentViewMoreBtn').style.display = "none";
+        document.getElementById('departmentList').style.marginBottom = "30px";
+    }
+    else {
+        document.getElementById('departmentViewMoreBtn').style.display = "inline-block";
+        document.getElementById('departmentList').style.marginBottom = "0";
+    }
     officeList.innerHTML = "";
+    if (Object.keys(officeCounter).length < 6) {
+        document.getElementById('officeViewMoreBtn').style.display = "none";
+        document.getElementById('officeList').style.marginBottom = "30px";
+    }
+    else {
+        document.getElementById('officeViewMoreBtn').style.display = "inline-block";
+        document.getElementById('officeList').style.marginBottom = "0";
+    }
     jobTitleList.innerHTML = "";
+    if (Object.keys(jobTitleCounter).length < 6) {
+        document.getElementById('jobTitleViewMoreBtn').style.display = "none";
+        document.getElementById('jobTitleList').style.marginBottom = "30px";
+    }
+    else {
+        document.getElementById('jobTitleViewMoreBtn').style.display = "inline-block";
+        document.getElementById('jobTitleList').style.marginBottom = "0";
+    }
 
     for (const property in departmentCounter) {
         var filter = document.createElement("li");
         filter.innerHTML = String(property) + " (" + String(departmentCounter[property]) + ")";
         filter.id = String(property) + "Filter";
         filter.className = "departmentFilter specialFilter";
-        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"department\")");
+        filter.setAttribute("onclick", "showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"department\")");
         document.getElementById("departmentList").appendChild(filter);
     }
     for (const property in officeCounter) {
@@ -298,7 +325,7 @@ function GenerateSpecialFilters() {
         filter.innerHTML = String(property) + " (" + String(officeCounter[property]) + ")";
         filter.id = String(property) + "Filter";
         filter.className = "officeFilter specialFilter";
-        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"office\")");
+        filter.setAttribute("onclick", "showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"office\")");
         document.getElementById("officeList").appendChild(filter);
     }
     for (const property in jobTitleCounter) {
@@ -306,26 +333,27 @@ function GenerateSpecialFilters() {
         filter.innerHTML = String(property) + " (" + String(jobTitleCounter[property]) + ")";
         filter.id = String(property) + "Filter";
         filter.className = "jobTitleFilter specialFilter";
-        filter.setAttribute("onclick", "ShowEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"jobTitle\")");
+        filter.setAttribute("onclick", "showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), \"jobTitle\")");
         document.getElementById("jobTitleList").appendChild(filter);
     }
 }
 
-function Counter(array) {
+function counter(array) {
     var count = {};
     array.forEach(val => count[val] = (count[val] || 0) + 1);
     return count;
 }
 
-function ClearKeywordField() {
+function clearKeywordField() {
     document.getElementById('keywordTxt').value = "";
 }
 
-function ShowAddEmployeeForm() {
+function showAddEmployeeForm() {
     document.getElementById("addEmployeeModal").style.display = "block";
+    document.getElementById("employeeAddedMessage").style.display = "none";
 }
 
-function CloseAddEmployeeForm() {
+function closeAddEmployeeForm() {
     var addFields = document.getElementsByClassName("addField");
     for (var k = 0; k < addFields.length; k++) {
         addFields[k].value = "";
@@ -334,6 +362,7 @@ function CloseAddEmployeeForm() {
     for (var k = 0; k < addFields.length; k++) {
         errorSigns[k].value = "";
     }
+    document.getElementById("employeeAddedMessage").style.display = "none";
     document.getElementById("addEmployeeModal").style.display = "none";
 }
 
@@ -343,14 +372,10 @@ function CloseAddEmployeeForm() {
 //    }
 //}
 
-function ShowEmployeeDetails(id) {
-    var successMessages = document.getElementsByClassName('successMessage');
-    var i;
-    for (i = 0; i < successMessages.length; i++) {
-        successMessages[i].style.display = "none";
-    }
+function showEmployeeDetails(id) {
+    document.getElementById('updatedMessage').style.display = "none";
     document.getElementById("employeeDetailsModal").style.display = "block";
-    var employee = employees.find(i => i.employeeId === String(id).substring(0, String(id).length - 4));
+    var employee = employees.find(i => String(i.employeeId) === id[0]);
     document.getElementById('employeeIdDetails').value = employee.employeeId;
     document.getElementById('firstNameDetails').value = employee.firstName;
     document.getElementById('lastNameDetails').value = employee.lastName;
@@ -363,7 +388,7 @@ function ShowEmployeeDetails(id) {
     document.getElementById('skypeIdDetails').value = employee.skypeId;
 }
 
-function CloseEmployeeDetails() {
+function closeEmployeeDetails() {
     document.getElementById("employeeDetailsModal").style.display = "none";
 }
 
@@ -373,14 +398,14 @@ function CloseEmployeeDetails() {
 //    }
 //}
 
-function EditDetails(fieldId) {
+function editDetails(fieldId) {
     document.getElementById(fieldId).removeAttribute('readonly');
     var button = document.getElementById("updateBtn");
     button.removeAttribute("readonly");
-    button.setAttribute("onclick", "UpdateDetails(String(document.querySelector('#employeeIdDetails').value), FetchUpdatedValue())");
+    button.setAttribute("onclick", "updateDetails(String(document.querySelector('#employeeIdDetails').value), fetchUpdatedValue())");
 } 
 
-function UpdateDetails(empId, updatedFieldAndValue) {
+function updateDetails(empId, updatedFieldAndValue) {
     var fieldAndValue = updatedFieldAndValue.split(" ");
     var property = String(fieldAndValue[0]).substring(6, String(fieldAndValue[0]).length - 3);
     var updatedValue = fieldAndValue[1];
@@ -394,10 +419,10 @@ function UpdateDetails(empId, updatedFieldAndValue) {
     document.getElementById(fieldAndValue[0]).setAttribute("readonly", "true");
     document.getElementById("updatedMessage").style.display = "block";
     ShowAllEmployees();
-    setTimeout(CloseEmployeeDetailsForm, 2000);
+    setTimeout(closeEmployeeDetailsForm, 2000);
 }
 
-function FetchUpdatedValue() {
+function fetchUpdatedValue() {
     var updateFields = document.getElementsByClassName('updateField');
     for (var k = 0; k < updateFields.length; k++) {
         if (updateFields[k].hasAttribute("readonly")) {
@@ -407,30 +432,30 @@ function FetchUpdatedValue() {
     }
 }
 
-function CloseEmployeeDetailsForm() {
+function closeEmployeeDetailsForm() {
     document.getElementById("employeeDetailsModal").style.display = "none";
 }
 
-function AutofillPreferredName(str){
+function autofillPreferredName(str){
     document.getElementById('preferredName').value = String(str);
 }
 
-function ViewMoreItems(btnId) {
+function viewMoreItems(btnId) {
     var listId = String(btnId).substring(0, String(btnId).length - 11) + "List";
     var listItems = document.getElementById(listId).querySelectorAll('li');
     for (var i = 0; i < listItems.length; i++) {
         listItems[i].classList.remove('specialFilter');
     }
     document.getElementById(btnId).innerHTML = "Show Less";
-    document.getElementById(btnId).setAttribute("onclick", "ViewLessItems(String(this.id))");
+    document.getElementById(btnId).setAttribute("onclick", "viewLessItems(String(this.id))");
 }
 
-function ViewLessItems(btnId) {
+function viewLessItems(btnId) {
     var listId = String(btnId).substring(0, String(btnId).length - 11) + "List";
     var listItems = document.getElementById(listId).querySelectorAll('li');
     for (var i = 0; i < listItems.length; i++) {
         listItems[i].classList.add('specialFilter');
     }
     document.getElementById(btnId).innerHTML = "Show More";
-    document.getElementById(btnId).setAttribute("onclick", "ViewMoreItems(String(this.id))");
+    document.getElementById(btnId).setAttribute("onclick", "viewMoreItems(String(this.id))");
 }
