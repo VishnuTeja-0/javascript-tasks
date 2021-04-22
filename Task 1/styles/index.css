@@ -107,6 +107,11 @@
     border-style: none;
 }
 
+#letterFilters button:hover {
+    cursor: pointer;
+    background-color: rgba(0,150,250,255);
+}
+
 #AllBtn {
     margin-left: 0px !important;
     margin-right: -5px !important;
@@ -155,6 +160,11 @@
     border-style: none;
 }
 
+#clearBtn:hover{
+    cursor:pointer;
+    background-color: rgba(100,160,0,255);
+}
+
 #filterHeader {
     margin-left: 40px !important;
 }
@@ -162,6 +172,10 @@
 #filterSelector {
     padding: 7px 0 7px 10px;
     margin-left: 5px;
+}
+
+#filterSelector:hover{
+    cursor:pointer;
 }
 
 #addEmployeeBtn {
@@ -172,6 +186,11 @@
     padding: 7px;
     font-size: 100%;
     border-style: none;
+}
+
+#addEmployeeBtn:hover{
+    cursor:pointer;
+    background-color: rgba(0,150,250,255);
 }
 
 .directory small:before {
@@ -194,7 +213,7 @@
 .modalContent {
     background-color: white;
     overflow: hidden;
-    margin: 8% auto;
+    margin: 6% auto;
     width: 40%;
     padding: 20px;
     position: relative;
@@ -257,14 +276,20 @@
     bottom: 10px;
 }
 
+.submitBtn:hover{
+    cursor:pointer;
+    background-color: rgba(0,150,250,255);
+}
+
 #employeeCards{
     position: relative;
     margin-top: 10px;
+    margin-bottom: 20px;
     padding: 15px 15px 180px;
     border-style: solid;
     border-color: rgba(215, 215, 215, 1);
     border-width: 2px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .card{
@@ -288,7 +313,7 @@
 
 .card .employeeDetails h5 {
     margin: 0 0 2px;
-    color: rgba(70, 70, 70, 1);
+    color: rgba(80, 80, 80, 1);
     font-size: 78%;
 }
 
@@ -321,22 +346,23 @@
 }
 
 .successMessage{
-    display:none;
+    display:block;
     color: rgba(0,177,252,255);
-}
-
-.link{
-    display: inline-block;
-    background-color: rgba(125, 125, 125, 1);
-    color: white;
-    margin: 0 5px 0 0;
-    padding: 0 2px;
-    font-size: 70%;
 }
 
 #noResultsMessage{
     color: rgba(125, 125, 125, 1);
     position: absolute;  
+}
+
+.actionLinks .fa{
+    color: rgba(125, 125, 125, 1);
+    font-size: 12px !important;
+    margin-right: 7px;
+}
+
+.actionLinks .fa:hover{
+    color: rgba(70, 70, 70, 1);
 }
 
 .errorSign{

@@ -249,12 +249,9 @@ function DisplayEmployeeCard(item) {
 
     var actionLinks = document.createElement("div");
     actionLinks.className = 'actionLinks';
-    for (var i = 0; i < 5; i++) {
-        var link = document.createElement("div");
-        link.innerHTML = 'o';
-        link.className = 'link';
-        actionLinks.appendChild(link);
-    }
+    actionLinks.innerHTML =
+        "<i class='fa fa-phone-square' aria-hidden='true'></i ><i class='fa fa-envelope' aria-hidden='true'></i><i class='fa fa-comment' aria-hidden='true'></i><i class='fa fa-star' aria-hidden='true'></i><i class='fa fa-heart' aria-hidden='true'></i>";
+
 
     employeeDetails.appendChild(actionLinks);
 
@@ -287,6 +284,7 @@ function GenerateSpecialFilters() {
     departmentList.innerHTML = "";
     officeList.innerHTML = "";
     jobTitleList.innerHTML = "";
+
     for (const property in departmentCounter) {
         var filter = document.createElement("li");
         filter.innerHTML = String(property) + " (" + String(departmentCounter[property]) + ")";
@@ -317,10 +315,6 @@ function Counter(array) {
     var count = {};
     array.forEach(val => count[val] = (count[val] || 0) + 1);
     return count;
-}
-
-function ViewMoreOffices(){
-    
 }
 
 function ClearKeywordField() {
