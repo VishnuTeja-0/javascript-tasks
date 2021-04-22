@@ -366,11 +366,12 @@ function closeAddEmployeeForm() {
     document.getElementById("addEmployeeModal").style.display = "none";
 }
 
-//window.onclick = function (event) {
-//    if (event.target == document.getElementById("addEmployeeModal")) {
-//        document.getElementById("addEmployeeModal").style.display = "none";
-//    }
-//}
+document.getElementsByClassName('modal').onclick = function () {
+    var modalWindows = document.getElementsByClassName('modal');
+    for (var modal in modalWindows) {
+        modal.style.display = "none";
+    }
+}
 
 function showEmployeeDetails(id) {
     document.getElementById('updatedMessage').style.display = "none";
@@ -391,12 +392,6 @@ function showEmployeeDetails(id) {
 function closeEmployeeDetails() {
     document.getElementById("employeeDetailsModal").style.display = "none";
 }
-
-//window.onclick = function (event) {
-//    if (event.target == document.getElementById("employeeDetailsModal")) {
-//        document.getElementById("employeeDetailsModal").style.display = "none";
-//    }
-//}
 
 function editDetails(fieldId) {
     document.getElementById(fieldId).removeAttribute('readonly');
