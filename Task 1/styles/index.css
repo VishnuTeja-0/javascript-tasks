@@ -219,34 +219,39 @@
     position: relative;
 }
 
-.formLabels{
-    width: 40%;
+.formCol1{
+    width: 50%;
     float:left;
 }
 
-.formLabels label{
-    display: block;
-    font-size: 85%;
-    padding: 3px 0;
-    margin-bottom: 10px;
+.formCol2 {
+    width: 50%;
+    float: right;
 }
 
-.formFields{
-    width: 60%;
-    float:right;
-}
-
-.formFields * {
-    display:inline-block;
-    margin-bottom: 10px;
-}
-
-.formFields input{
-    padding: 2px 5px;
-
+.modal form input {
+    display: inline-block;
+    padding: 3px 5px;
     border-style: solid;
     border-color: black;
     border-width: 1px;
+}
+
+.formField {
+    padding-bottom: 30px;
+    position: relative;
+}
+
+.formField label {
+    margin-bottom: 3px;
+    display: block;
+}
+
+.errorMessage{
+    position:absolute;
+    font-size: 12px;
+    color: red;
+    bottom: 10px;
 }
 
 .modalContent h3 {
@@ -272,8 +277,8 @@
 .submitBtn {
     color: white;
     background-color: rgba(0,177,252,255);
-    border-style: none;
-    padding: 10px;
+    border-style: none !important;
+    padding: 10px !important;
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -297,6 +302,7 @@
 
 .card{
     display: inline-block;
+    float:left;
     background-color: rgba(230, 230, 230, 1);
     width: 25%;
     padding: 10px;
