@@ -1,17 +1,19 @@
 var employees = new Array();
 
+initialize();
+
 function initializeDefaultEmployees() {
-    var employee1 = new Employee({ firstName: "Vishnu", lastName: "Teja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern", office: "Hyderabad", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });
+    var employee1 = new Employee({id: "1", firstName: "Vishnu", lastName: "Teja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern", office: "Hyderabad", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee1);
-    var employee2 = new Employee({ firstName: "Bishnu", lastName: "Yeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Bangalore", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
+    var employee2 = new Employee({id: "2", firstName: "Bishnu", lastName: "Yeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Bangalore", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee2);
-    var employee3 = new Employee({ firstName: "Kishnu", lastName: "Ueja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Mumbai", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
+    var employee3 = new Employee({id: "3", firstName: "Kishnu", lastName: "Ueja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Mumbai", department: "Product Engineering2", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee3);
-    var employee4 = new Employee({ firstName: "Pishnu", lastName: "Ieja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Delhi", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
+    var employee4 = new Employee({id: "4", firstName: "Pishnu", lastName: "Ieja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern3", office: "Delhi", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee4);
-    var employee5 = new Employee({ firstName: "Eishnu", lastName: "Oeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern5", office: "Kolkata", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
+    var employee5 = new Employee({id: "5", firstName: "Eishnu", lastName: "Oeja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern5", office: "Kolkata", department: "Product Engineering3", phoneNumber: "7042687411", skypeId: "ffad" });
     employees.push(employee5);
-    var employee6 = new Employee({ firstName: "Aishnu", lastName: "Peja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern6", office: "Seattle", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });  
+    var employee6 = new Employee({id: "6", firstName: "Aishnu", lastName: "Peja", preferredName: "Vishnu", email: "vishnu.9999.l5@gmail.com", jobTitle: "Intern6", office: "Seattle", department: "Product Engineering", phoneNumber: "7042687411", skypeId: "ffad" });  
     employees.push(employee6);
 }
 
@@ -134,6 +136,7 @@ function validateEmployeeDetails() {
     var verifiedCondition = (nameFields.forEach(isValidName) & otherFields.forEach(isNotNullField) & isValidEmail() & isValidPhoneNumber());
     if (verifiedCondition) {
         var employeeDetails = {
+            id: String(employees.length + 1),
             firstName: firstName,
             lastName: lastName,
             preferredName: preferredName,
@@ -145,7 +148,6 @@ function validateEmployeeDetails() {
             skypeId: skypeId
         };
         addEmployee(employeeDetails);
-        generateSpecialFilters();
     }
     else {
         return;
@@ -171,6 +173,7 @@ function addEmployee(employeeDetails) {
     getElement('employeeAddedMessage').classList.remove("hidden");
     setTimeout(closeAddEmployeeForm, 2000);
     showAllEmployees();
+    generateSpecialFilters();
 }
 
 function showAllEmployees() {
@@ -219,16 +222,13 @@ function displayEmployeeCard(item) {
                                 "<div class = 'actionLinks'><i class='fa fa-phone-square' aria-hidden='true'></i ><i class='fa fa-envelope' aria-hidden='true'></i><i class='fa fa-comment' aria-hidden='true'></i><i class='fa fa-star' aria-hidden='true'></i><i class='fa fa-heart' aria-hidden='true'></i></div>" +
                           "</div>";
 
-    var employeeCardHTML = "<div class = 'card' id = '" + String(item.employeeId) + "Card" + "' onclick = 'showEmployeeDetails(this.id)'>" +
+    var employeeCardHTML = "<div class = 'card' id = '" + String(item.id) + "Card" + "' onclick = 'showEmployeeDetails(this.id)'>" +
                         employeePhotoHTML +
                         employeeDetailsHTML +
                        "</div>";
 
     var employeeCard = document.createElement('div');
     employeeCard.innerHTML = employeeCardHTML;
-    employeeCard.class = "card";
-    employeeCard.id = String(item.employeeId) + 'Card';
-    employeeCard.setAttribute('onclick', 'showEmployeeDetails(this.id)');
 
     getElement("employeeCards").appendChild(employeeCard);
 }
@@ -284,6 +284,7 @@ function generateFilterCounter(array) {
 
 function clearKeywordField() {
     getElement('keywordTxt').value = "";
+    showAllEmployees(); 
 }
 
 function showAddEmployeeForm() {
@@ -323,9 +324,8 @@ document.getElementsByClassName('modal').onclick = function () {
 function showEmployeeDetails(id) {
     getElement('updatedMessage').classList.add("hidden");
     getElement("employeeDetailsModal").classList.remove("hidden");
-    var employee = employees.find(i => String(i.employeeId) === id[0]);
+    var employee = employees.find(i => String(i.id) === id[0]);
     var properties = Object.keys(employee);
-    console.log(employee);
     for (let i = 0; i < properties.length; i++) {
         getElement(properties[i] + 'Details').value = employee[properties[i]];
     }
@@ -335,49 +335,54 @@ function editDetails(fieldId) {
     getElement(fieldId).removeAttribute('readonly');
     var button = getElement("updateBtn");
     button.removeAttribute("readonly");
-    button.setAttribute("onclick", "updateDetails(String(document.querySelector('#employeeIdDetails').value), fetchUpdatedValue())");
+    button.setAttribute("onclick", "updateDetails(String(document.querySelector('#idDetails').value), fetchUpdatedFields())");
 } 
 
-function updateDetails(empId, updatedFieldAndValue) {
+function updateDetails(empId, updatedFieldsAndValues) {
     var nameFields = ['firstName', 'lastName', 'preferredName'];
-    var fieldAndValue = updatedFieldAndValue.split(" ");
-    var property = String(fieldAndValue[0]).substring(0, String(fieldAndValue[0]).length - 7);
+    for (let i = 0; i < updatedFieldsAndValues.length; i++) {
+        var updatedFieldAndValue = updatedFieldsAndValues[i];
+        var propertyField = updatedFieldAndValue.substr(0, updatedFieldAndValue.indexOf(' '));
+        var property = String(propertyField).substring(0, String(propertyField).length - 7);
 
-    if (nameFields.includes(property) && !isValidName(fieldAndValue[0])) {
-        return;
-    }
-    else if (property == "email" && !isValidEmail(fieldAndValue[0])) {
-        return;
-    }
-    else if (property == "phoneNumber" && !isValidPhoneNumber(fieldAndValue[0])) {
-        return;
-    }
-    else if (!isNotNullField(fieldAndValue[0])) {
-        return;
-    }
-
-    var updatedValue = fieldAndValue[1];
-    for (var i in employees) {
-        if (employees[i].employeeId == empId) {
-            employees[i][property] = updatedValue;
-            break;
+        if (nameFields.includes(property) && !isValidName(propertyField)) {
+            return;
         }
+        else if (property == "email" && !isValidEmail(propertyField)) {
+            return;
+        }
+        else if (property == "phoneNumber" && !isValidPhoneNumber(propertyField)) {
+            return;
+        }
+        else if (!isNotNullField(propertyField)) {
+            return;
+        }
+
+        var updatedValue = updatedFieldAndValue.substr(updatedFieldAndValue.indexOf(' ') + 1);;
+        for (let i in employees) {
+            if (employees[i].id == empId) {
+                employees[i][property] = updatedValue;
+                break;
+            }
+        }
+        getElement(propertyField).setAttribute("readonly", "true");
     }
     getElement("updateBtn").setAttribute("readonly", "true");
-    getElement(fieldAndValue[0]).setAttribute("readonly", "true");
     getElement("updatedMessage").classList.remove("hidden");
     showAllEmployees();
+    generateSpecialFilters();
     setTimeout(closeEmployeeDetailsForm, 2000);
 }
 
-function fetchUpdatedValue() {
+function fetchUpdatedFields() {
     var updateFields = document.getElementsByClassName('updateField');
+    var updatedFieldsAndValues = [];
     for (var k = 0; k < updateFields.length; k++) {
         if (!updateFields[k].hasAttribute("readonly")) {
-            return updateFields[k].id + " " + updateFields[k].value;
-            break;
+            updatedFieldsAndValues.push(updateFields[k].id + " " + updateFields[k].value);
         }
     }
+    return updatedFieldsAndValues;
 }
 
 function closeEmployeeDetailsForm() {

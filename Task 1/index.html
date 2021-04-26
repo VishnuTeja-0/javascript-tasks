@@ -6,7 +6,7 @@
         <link rel = "stylesheet" href= "styles/index.css">
         <script src="https://use.fontawesome.com/24c5bafea1.js"></script>
     </head>
-    <body onload = "initialize()">
+    <body>
     	<div class = "header">
     		<div class = "logo">
     			<img src = "images/logo.png" alt = "Saketa">
@@ -25,15 +25,15 @@
     			<h5>Departments</h5>
     			<ul id = "departmentList">
     			</ul>
-                <span class= "viewMoreBtn" id= "departmentViewMoreBtn" onclick= "hiddenFilterToggle(String(this.id), 1)">Show More</span>
+                <span class= "viewMoreBtn" id= "departmentViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     			<h5>Offices</h5>
     			<ul id = "officeList">
     			</ul>
-                <span class= "viewMoreBtn" id= "officeViewMoreBtn" onclick= "hiddenFilterToggle(String(this.id), 1)">Show More</span>
+                <span class= "viewMoreBtn" id= "officeViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     			<h5>Job Titles</h5>
     			<ul id = "jobTitleList">
     			</ul>
-                <span class= "viewMoreBtn" id= "jobTitleViewMoreBtn" onclick= "hiddenFilterToggle(String(this.id), 1)">Show More</span>
+                <span class= "viewMoreBtn" id= "jobTitleViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
@@ -43,9 +43,9 @@
                     <h5>Search</h5>
                     <div class= "searchBar">
                         <img src= "images/search_icon.png" alt= "search">
-                        <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "showEmployeeByProperty(String(this.value), String(document.querySelector('#filterSelector').value))">
+                        <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "showEmployeeByProperty(String(this.value), document.querySelector('#filterSelector').value)">
                     </div>
-                    <input id = "clearBtn" type = "button" value = "Clear" onclick= "showAllEmployees(); clearKeywordField()">
+                    <input id = "clearBtn" type = "button" value = "Clear" onclick= "clearKeywordField()">
                     <h5 id= "filterHeader">Filter by</h5>
                     <select id = 'filterSelector'>
                         <option value = "firstName" selected>First Name</option>
@@ -148,33 +148,33 @@
                     <div class= "formCol1">
                         <div class = "formField">
                             <label for= "employeeIdDetails">Employee ID : </label>
-                            <input type="text" id= "employeeIdDetails" readonly><br>
+                            <input type="text" id= "idDetails" readonly><br>
                         </div>
 
                         <div class = "formField">
                             <label for= "lastNameDetails">Last Name : </label>
-                            <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "lastNameDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "lastNameDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "emailDetails">Email : </label>
-                            <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "emailDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "emailDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "officeDetails">Office : </label>
-                            <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "officeDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "officeDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "phoneNumberDetails">Phone Number : </label>
-                            <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "phoneNumberDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "phoneNumberDetailsErrorMessage"></div>
                         </div>  
@@ -182,35 +182,35 @@
                     <div class= "formCol2">
                         <div class = "formField">
                             <label for= "firstNameDetails">First Name : </label>
-                            <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "firstNameDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "firstNameDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "preferredNameDetails">Preferred Name : </label>
-                            <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "preferredNameDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "preferredNameDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "jobTitleDetails">Job Title : </label>
-                            <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "jobTitleDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "jobTitleDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "departmentDetails">Department : </label>
-                            <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "departmentDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "departmentDetailsErrorMessage"></div>
                         </div>
 
                         <div class = "formField">
                             <label for= "skypeIdDetails">Skype ID : </label>
-                            <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "editDetails(String(this.id))" readonly>
+                            <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
                             <span class= "errorSign" id= "skypeIdDetailsErrorSign"></span>
                             <div class= "errorMessage" id= "skypeIdDetailsErrorMessage"></div>
                         </div>          

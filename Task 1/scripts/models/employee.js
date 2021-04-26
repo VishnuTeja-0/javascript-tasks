@@ -1,6 +1,6 @@
 class Employee {
     constructor(employeeDetails) {
-        this.employeeId = employees.length + 1;
+        this.id = employeeDetails.id;
         this.firstName = employeeDetails.firstName;
         this.lastName = employeeDetails.lastName;
         this.preferredName = employeeDetails.preferredName;
