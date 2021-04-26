@@ -15,8 +15,20 @@ function initializeDefaultEmployees() {
     employees.push(employee6);
 }
 
+function getElement(id) {
+    return document.getElementById(id);
+}
+
+function getClassElements(className) {
+    return document.getElementsByClassName(className);
+}
+
+function clearElement(id) {
+    getElement(id).innerHTML = "";
+}
+
 function initializeLetterFilters() {
-    var container = document.getElementById("letterFilters");
+    var container = getElement("letterFilters");
     for (var i = 65; i <= 90; i++) {
         var letter = String.fromCharCode(i);
         var btn = document.createElement("button");
@@ -35,83 +47,83 @@ function initialize() {
 }
 
 function isValidName(fieldId) {
-    var name = document.getElementById(fieldId);
+    var name = getElement(fieldId);
     if (isAlphabetic(name.value)) {
-        document.getElementById(fieldId + "ErrorSign").innerHTML = "";
-        document.getElementById(fieldId + "ErrorMessage").innerHTML = "";
-        name.style.borderColor = "black";
+        clearElement(fieldId + "ErrorSign");
+        clearElement(fieldId + "ErrorMessage");
+        name.classList.remove("errorBorder");
         return true;
     }
     else if (name.value) {
-        document.getElementById(fieldId + "ErrorSign").innerHTML = "&times;";
-        document.getElementById(fieldId + "ErrorMessage").innerHTML = "Invalid input. Please enter alphabetic input.";
-        name.style.borderColor = "red";
+        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
+        getElement(fieldId + "ErrorMessage").innerHTML = "Invalid input. Please enter alphabetic input.";
+        name.classList.add("errorBorder");
         return false;
     }
     else {
-        document.getElementById(fieldId + "ErrorSign").innerHTML = "&times;";
-        document.getElementById(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
-        name.style.borderColor = "red";
+        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
+        getElement(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
+        name.classList.add("errorBorder");
         return false;
     }
 }
 
 function isValidEmail(fieldId = "email") {
-    var email = document.getElementById(fieldId);
+    var email = getElement(fieldId);
     if (isEmail(email.value)) {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "";
-        email.style.borderColor = "black";
+        clearElement(fieldId + 'ErrorSign');
+        clearElement(fieldId + 'ErrorMessage');
+        email.classList.remove("errorBorder");
         return true;
     }
     else if (email.value) {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "&times;";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid email.";
-        email.style.borderColor = "red";
+        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
+        getElement(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid email.";
+        email.classList.add("errorBorder");
         return false;
     }
     else {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "&times;";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
-        email.style.borderColor = "red";
+        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
+        getElement(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
+        email.classList.add("errorBorder");
         return false;
     }
 }
 
 function isNotNullField(fieldId) {
-    var field = document.getElementById(fieldId);
+    var field = getElement(fieldId);
     if (field.value) {
-        document.getElementById(fieldId + "ErrorSign").innerHTML = "";
-        document.getElementById(fieldId + "ErrorMessage").innerHTML = "";
-        field.style.borderColor = "black";
+        clearElement(fieldId + "ErrorSign");
+        clearElement(fieldId + "ErrorMessage");
+        field.classList.remove("errorBorder");
         return true;
     }
     else {
-        document.getElementById(fieldId + "ErrorSign").innerHTML = "&times;";
-        document.getElementById(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
-        field.style.borderColor = "red";
+        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
+        getElement(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
+        field.classList.add("errorBorder");
         return false;
     }
 }
 
 function isValidPhoneNumber(fieldId = "phoneNumber") {
-    var phoneNumber = document.getElementById(fieldId);
+    var phoneNumber = getElement(fieldId);
     if (isPhoneNumber(phoneNumber.value)) {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "";
-        phoneNumber.style.borderColor = "black";
+        clearElement(fieldId + 'ErrorSign');
+        clearElement(fieldId + 'ErrorMessage');
+        phoneNumber.classList.remove("errorBorder");
         return true;
     }
     else if (phoneNumber.value) {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "&times;";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid phone number.";
-        phoneNumber.style.borderColor = "red";
+        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
+        getElement(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid phone number.";
+        phoneNumber.classList.add("errorBorder");
         return false;
     }
     else {
-        document.getElementById(fieldId + 'ErrorSign').innerHTML = "&times;";
-        document.getElementById(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
-        phoneNumber.style.borderColor = "red";
+        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
+        getElement(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
+        phoneNumber.classList.add("errorBorder");
         return false;
     }
 }
@@ -156,15 +168,15 @@ function isPhoneNumber(str) {
 function addEmployee(employeeDetails) {
     let employee = new Employee(employeeDetails);
     employees.push(employee);
-    document.getElementById('employeeAddedMessage').style.display = "block";
+    getElement('employeeAddedMessage').classList.remove("hidden");
     setTimeout(closeAddEmployeeForm, 2000);
     showAllEmployees();
 }
 
 function showAllEmployees() {
-    document.getElementById("employeeCards").innerHTML = "";
+    clearElement("employeeCards");
     if (employees.length == 0) {
-        document.getElementById("employeeCards").innerHTML =
+        getElement("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
@@ -173,10 +185,10 @@ function showAllEmployees() {
 }
 
 function showEmployeeByLetter(str) {
-    document.getElementById("employeeCards").innerHTML = "";
+    clearElement("employeeCards");
     var filteredEmployees = employees.filter(filterEmployeeByLetter(str[0]));
     if (filteredEmployees.length == 0) {
-        document.getElementById("employeeCards").innerHTML =
+        getElement("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
@@ -185,10 +197,10 @@ function showEmployeeByLetter(str) {
 }
 
 function showEmployeeByProperty(str, property) {
-    document.getElementById("employeeCards").innerHTML = "";
+    clearElement("employeeCards");
     var filteredEmployees = employees.filter(filterEmployeeByProperty(str, property));
     if (filteredEmployees.length === 0) {
-        document.getElementById("employeeCards").innerHTML =
+        getElement("employeeCards").innerHTML =
             "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
     }
     else {
@@ -218,7 +230,7 @@ function displayEmployeeCard(item) {
     employeeCard.id = String(item.employeeId) + 'Card';
     employeeCard.setAttribute('onclick', 'showEmployeeDetails(this.id)');
 
-    document.getElementById("employeeCards").appendChild(employeeCard);
+    getElement("employeeCards").appendChild(employeeCard);
 }
 
 function filterEmployeeByLetter(str) {
@@ -237,30 +249,31 @@ function generateSpecialFilters() {
     specialFilterProperties = ['department', 'office', 'jobTitle'];
     for (let i = 0; i < specialFilterProperties.length; i++) {
         let property = specialFilterProperties[i];
-        document.getElementById(property + "List").innerHTML = generateFilterList(property);
+        generateFilterList(property);
     }
 }
 
 function generateFilterList(item) {
     var Counter = generateFilterCounter(employees.map(a => a[item]));
     var listId = item + "List";
-    document.getElementById(listId).innerHTML = "";
+    clearElement(listId);
     if (Object.keys(Counter).length < 6) {
-        document.getElementById(item + 'ViewMoreBtn').style.display = "none";
-        document.getElementById(listId).style.marginBottom = "30px";
+        getElement(item + 'ViewMoreBtn').classList.add("hidden");
+        getElement(listId).classList.add('noViewButton');
     }
     else {
-        document.getElementById(item + 'ViewMoreBtn').style.display = "inline-block";
-        document.getElementById(listId).style.marginBottom = "0";
+        getElement(item + 'ViewMoreBtn').classList.remove("hidden");
+        getElement(listId).classList.remove('noViewButton');
     }
-    var listHTML = [];
     for (const property in Counter) {
-        var filterHTML = "<li class = '" + item + "Filter specialFilter' id = '" + String(property) + "Filter' onclick = 'showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), '" + item + "')'>" +
-                            String(property) + " (" + String(Counter[property]) + ")" +
-                          "</li>";
-        listHTML.push(filterHTML);
+        var filter = document.createElement("li");
+        filter.className = item + "Filter specialFilter";
+        filter.id = String(property) + "Filter";
+        filter.innerHTML = String(property) + " (" + String(Counter[property]) + ")";
+        var onclickFunction = "showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), '" + item + "')";
+        filter.setAttribute("onclick", onclickFunction);
+        getElement(listId).appendChild(filter);
     }
-    return listHTML.reduce((a, b) => a + b, "");
 }
 
 function generateFilterCounter(array) {
@@ -270,12 +283,12 @@ function generateFilterCounter(array) {
 }
 
 function clearKeywordField() {
-    document.getElementById('keywordTxt').value = "";
+    getElement('keywordTxt').value = "";
 }
 
 function showAddEmployeeForm() {
-    document.getElementById("addEmployeeModal").style.display = "block";
-    document.getElementById("employeeAddedMessage").style.display = "none";
+    getElement("addEmployeeModal").classList.remove("hidden");
+    getElement("employeeAddedMessage").classList.add("hidden");
 }
 
 function resetErrorMessages() {
@@ -293,11 +306,11 @@ function closeAddEmployeeForm() {
     var addFields = document.getElementsByClassName("addField");
     for (let k = 0; k < addFields.length; k++) {
         addFields[k].value = "";
-        addFields[k].style.borderColor = "black";
+        addFields[k].classList.remove("errorBorder");
     }
     resetErrorMessages();
-    document.getElementById("employeeAddedMessage").style.display = "none";
-    document.getElementById("addEmployeeModal").style.display = "none";
+    getElement("employeeAddedMessage").classList.add("hidden");
+    getElement("addEmployeeModal").classList.add("hidden");
 }
 
 document.getElementsByClassName('modal').onclick = function () {
@@ -308,19 +321,19 @@ document.getElementsByClassName('modal').onclick = function () {
 }
 
 function showEmployeeDetails(id) {
-    document.getElementById('updatedMessage').style.display = "none";
-    document.getElementById("employeeDetailsModal").style.display = "block";
+    getElement('updatedMessage').classList.add("hidden");
+    getElement("employeeDetailsModal").classList.remove("hidden");
     var employee = employees.find(i => String(i.employeeId) === id[0]);
     var properties = Object.keys(employee);
     console.log(employee);
     for (let i = 0; i < properties.length; i++) {
-        document.getElementById(properties[i] + 'Details').value = employee[properties[i]];
+        getElement(properties[i] + 'Details').value = employee[properties[i]];
     }
 }
 
 function editDetails(fieldId) {
-    document.getElementById(fieldId).removeAttribute('readonly');
-    var button = document.getElementById("updateBtn");
+    getElement(fieldId).removeAttribute('readonly');
+    var button = getElement("updateBtn");
     button.removeAttribute("readonly");
     button.setAttribute("onclick", "updateDetails(String(document.querySelector('#employeeIdDetails').value), fetchUpdatedValue())");
 } 
@@ -350,9 +363,9 @@ function updateDetails(empId, updatedFieldAndValue) {
             break;
         }
     }
-    document.getElementById("updateBtn").setAttribute("readonly", "true");
-    document.getElementById(fieldAndValue[0]).setAttribute("readonly", "true");
-    document.getElementById("updatedMessage").style.display = "block";
+    getElement("updateBtn").setAttribute("readonly", "true");
+    getElement(fieldAndValue[0]).setAttribute("readonly", "true");
+    getElement("updatedMessage").classList.remove("hidden");
     showAllEmployees();
     setTimeout(closeEmployeeDetailsForm, 2000);
 }
@@ -371,36 +384,33 @@ function closeEmployeeDetailsForm() {
     resetErrorMessages();
     var updateFields = document.getElementsByClassName("updateField");
     for (let k = 0; k < updateFields.length; k++) {
-        if (!updateFields[k].hasAttribute("readonly")) {
-            updateFields[k].style.borderColor = "black";
-            break;
-        }       
+        updateFields[k].classList.remove("errorBorder");       
     }
-    document.getElementById("employeeDetailsModal").style.display = "none";
+    getElement("employeeDetailsModal").classList.add("hidden");
 }
 
 function autofillPreferredName(str){
-    document.getElementById('preferredName').value = String(str);
+    getElement('preferredName').value = String(str);
 }
 
 function hiddenFilterToggle(btnId, showMoreAction) {
     var listId = String(btnId).substring(0, String(btnId).length - 11) + "List";
-    var listItems = document.getElementById(listId).querySelectorAll('li');
+    var listItems = getElement(listId).querySelectorAll('li');
     if (showMoreAction) {
         for (var i = 0; i < listItems.length; i++) {
             listItems[i].classList.remove('specialFilter');
             
         }
-        document.getElementById(btnId).innerHTML = "Show Less";
-        document.getElementById(btnId).setAttribute("onclick", "hiddenFilterToggle(String(this.id), 0)");
+        getElement(btnId).innerHTML = "Show Less";
+        getElement(btnId).setAttribute("onclick", "hiddenFilterToggle(String(this.id), 0)");
     }
     else {
         for (var i = 0; i < listItems.length; i++) {
             listItems[i].classList.add('specialFilter');
 
         }
-        document.getElementById(btnId).innerHTML = "Show More";
-        document.getElementById(btnId).setAttribute("onclick", "hiddenFilterToggle(String(this.id), 1)");
+        getElement(btnId).innerHTML = "Show More";
+        getElement(btnId).setAttribute("onclick", "hiddenFilterToggle(String(this.id), 1)");
     }
     
 }

@@ -200,7 +200,7 @@
 }
 
 .modal {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 1;
     overflow: auto;
@@ -381,4 +381,16 @@
 
 .nav ul .specialFilter:nth-of-type(1n+6) {
     display: none;
+}
+
+.errorBorder {
+    border-color: red !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.noViewButton {
+    margin-bottom: 30px !important;
 }
