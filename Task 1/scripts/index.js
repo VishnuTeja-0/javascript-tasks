@@ -35,8 +35,8 @@ function initializeLetterFilters() {
         var letter = String.fromCharCode(i);
         var btn = document.createElement("button");
         btn.innerHTML = letter;
-        btn.id = letter + "Btn";
-        btn.setAttribute("onclick", "showEmployeeByLetter(String(this.id))");
+        btn.id = letter.toLowerCase() + "Btn";
+        btn.setAttribute("onclick", "showEmployeeByProperty(this.id[0], 'firstName')");
         container.appendChild(btn);
     }
 }
@@ -50,102 +50,91 @@ function initialize() {
 
 function isValidName(fieldId) {
     var name = getElement(fieldId);
-    if (isAlphabetic(name.value)) {
-        clearElement(fieldId + "ErrorSign");
-        clearElement(fieldId + "ErrorMessage");
-        name.classList.remove("errorBorder");
-        return true;
-    }
-    else if (name.value) {
-        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
-        getElement(fieldId + "ErrorMessage").innerHTML = "Invalid input. Please enter alphabetic input.";
-        name.classList.add("errorBorder");
+    var errorMessage = (/^[a-zA-Z]+$/.test(name.value)) ? "" : (name.value ? "Invalid input. Please enter alphabetic input." : "Please fill out this field");
+    getElement(fieldId + "ErrorMessage").innerHTML = errorMessage;
+
+    if (errorMessage) {
+        name.classList.add("error-border");
         return false;
     }
-    else {
-        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
-        getElement(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
-        name.classList.add("errorBorder");
-        return false;
-    }
+
+    name.classList.remove("error-border");
+    return true;
 }
 
 function isValidEmail(fieldId = "email") {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var email = getElement(fieldId);
-    if (isEmail(email.value)) {
-        clearElement(fieldId + 'ErrorSign');
-        clearElement(fieldId + 'ErrorMessage');
-        email.classList.remove("errorBorder");
-        return true;
-    }
-    else if (email.value) {
-        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
-        getElement(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid email.";
-        email.classList.add("errorBorder");
+    var errorMessage = (re.test(email.value)) ? "" : (email.value ? "Invalid input. Please enter a valid email" : "Please fill out this field");
+    getElement(fieldId + "ErrorMessage").innerHTML = errorMessage;
+
+    if (errorMessage) {
+        email.classList.add("error-border");
         return false;
     }
-    else {
-        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
-        getElement(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
-        email.classList.add("errorBorder");
-        return false;
-    }
+
+    email.classList.remove("error-border");
+    return true;
 }
 
 function isNotNullField(fieldId) {
     var field = getElement(fieldId);
-    if (field.value) {
-        clearElement(fieldId + "ErrorSign");
-        clearElement(fieldId + "ErrorMessage");
-        field.classList.remove("errorBorder");
-        return true;
-    }
-    else {
-        getElement(fieldId + "ErrorSign").innerHTML = "&times;";
-        getElement(fieldId + "ErrorMessage").innerHTML = "Please fill out this field";
-        field.classList.add("errorBorder");
+    var errorMessage = (field.value) ? "" : "Please fill out this field";
+    getElement(fieldId + "ErrorMessage").innerHTML = errorMessage;
+
+    if (errorMessage) {
+        field.classList.add("error-border");
         return false;
     }
+
+    field.classList.remove("error-border");
+    return true;
 }
 
 function isValidPhoneNumber(fieldId = "phoneNumber") {
     var phoneNumber = getElement(fieldId);
-    if (isPhoneNumber(phoneNumber.value)) {
-        clearElement(fieldId + 'ErrorSign');
-        clearElement(fieldId + 'ErrorMessage');
-        phoneNumber.classList.remove("errorBorder");
-        return true;
-    }
-    else if (phoneNumber.value) {
-        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
-        getElement(fieldId + 'ErrorMessage').innerHTML = "Invalid input. Please enter a valid phone number.";
-        phoneNumber.classList.add("errorBorder");
+    var errorMessage = (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneNumber.value)) ? "" : (phoneNumber.value ? "Invalid input. Please enter a valid phone number" : "Please fill out this field");
+    getElement(fieldId + "ErrorMessage").innerHTML = errorMessage;
+
+    if (errorMessage) {
+        phoneNumber.classList.add("error-border");
         return false;
     }
-    else {
-        getElement(fieldId + 'ErrorSign').innerHTML = "&times;";
-        getElement(fieldId + 'ErrorMessage').innerHTML = "Please fill out this field";
-        phoneNumber.classList.add("errorBorder");
-        return false;
-    }
+
+    phoneNumber.classList.remove("error-border");
+    return true;
 }
 
 function validateEmployeeDetails() {
     var nameFields = ['firstName', 'lastName', 'preferredName'];
     var otherFields = ['jobTitle', 'office', 'department', 'skypeId'];
-    var verifiedCondition = (nameFields.forEach(isValidName) & otherFields.forEach(isNotNullField) & isValidEmail() & isValidPhoneNumber());
-    if (verifiedCondition) {
+    var isNameFieldsValid = true, isOtherFieldsValid = true;
+    for (let i = 0; i < nameFields.length; i++) {
+        if (!isValidName(nameFields[i])) {
+            isNameFieldsValid = false;
+            break;
+        }
+    }
+    for (let i = 0; i < otherFields.length; i++) {
+        if (!isNotNullField(otherFields[i])) {
+            isOtherFieldsValid = false;
+            break;
+        }
+    }
+    var isEmailFieldValid = isValidEmail();
+    var isPhoneNumberFieldValid = isValidPhoneNumber();
+    if (isNameFieldsValid && isOtherFieldsValid && isEmailFieldValid && isPhoneNumberFieldValid) {
         var employeeDetails = {
             id: String(employees.length + 1),
-            firstName: firstName,
-            lastName: lastName,
-            preferredName: preferredName,
-            email: email,
-            jobTitle: jobTitle,
-            office: office,
-            department: department,
-            phoneNumber: phoneNumber,
-            skypeId: skypeId
+            firstName: getElement("firstName").value,
+            lastName: getElement("lastName").value,
+            preferredName: getElement("preferredName").value,
+            email: getElement("email").value,
+            jobTitle: getElement("jobTitle").value,
+            office: getElement("office").value,
+            department: getElement("department").value,
+            phoneNumber: getElement("phoneNumber").value,
+            skypeId: getElement("skypeId").value
         };
         addEmployee(employeeDetails);
     }
@@ -154,24 +143,10 @@ function validateEmployeeDetails() {
     } 
 }
 
-function isAlphabetic(str) {
-    return /^[a-zA-Z]+$/.test(str);
-}
-
-function isEmail(str) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(str);
-}
-
-function isPhoneNumber(str) {
-    return /^[0]?[789]\d{9}$/.test(str);
-}
-
 function addEmployee(employeeDetails) {
     let employee = new Employee(employeeDetails);
     employees.push(employee);
-    getElement('employeeAddedMessage').classList.remove("hidden");
-    setTimeout(closeAddEmployeeForm, 2000);
+    closeEmployeeForm();
     showAllEmployees();
     generateSpecialFilters();
 }
@@ -184,18 +159,6 @@ function showAllEmployees() {
     }
     else {
         employees.forEach(displayEmployeeCard);
-    }   
-}
-
-function showEmployeeByLetter(str) {
-    clearElement("employeeCards");
-    var filteredEmployees = employees.filter(filterEmployeeByLetter(str[0]));
-    if (filteredEmployees.length == 0) {
-        getElement("employeeCards").innerHTML =
-            "<div id = \"noResultsMessage\"><h1>No Results Available!</h1><h3>Please try again with different search filters.</h3></div>"
-    }
-    else {
-        filteredEmployees.forEach(displayEmployeeCard);
     }   
 }
 
@@ -213,13 +176,13 @@ function showEmployeeByProperty(str, property) {
 
 function displayEmployeeCard(item) {
     
-    var employeePhotoHTML = "<div class = 'employeePhoto'>" + String(item.firstName[0] + item.lastName[0]) + "</div>";
+    var employeePhotoHTML = "<div class = 'employee-photo'>" + String(item.firstName[0] + item.lastName[0]) + "</div>";
 
-    var employeeDetailsHTML = "<div class = 'employeeDetails'>" +
+    var employeeDetailsHTML = "<div class = 'employee-details'>" +
                                 "<h5>" + item.firstName + " " + item.lastName + "</h5>" +
                                 "<p>" + item.jobTitle + "</p>" +
                                 "<p>" + item.department + " Department" + "</p>" +
-                                "<div class = 'actionLinks'><i class='fa fa-phone-square' aria-hidden='true'></i ><i class='fa fa-envelope' aria-hidden='true'></i><i class='fa fa-comment' aria-hidden='true'></i><i class='fa fa-star' aria-hidden='true'></i><i class='fa fa-heart' aria-hidden='true'></i></div>" +
+                                "<div class = 'action-links'><i class='fa fa-phone-square' aria-hidden='true'></i ><i class='fa fa-envelope' aria-hidden='true'></i><i class='fa fa-comment' aria-hidden='true'></i><i class='fa fa-star' aria-hidden='true'></i><i class='fa fa-heart' aria-hidden='true'></i></div>" +
                           "</div>";
 
     var employeeCardHTML = "<div class = 'card' id = '" + String(item.id) + "Card" + "' onclick = 'showEmployeeDetails(this.id)'>" +
@@ -231,12 +194,6 @@ function displayEmployeeCard(item) {
     employeeCard.innerHTML = employeeCardHTML;
 
     getElement("employeeCards").appendChild(employeeCard);
-}
-
-function filterEmployeeByLetter(str) {
-    return function (item) {
-        return item.firstName[0] === str;
-    }
 }
 
 function filterEmployeeByProperty(str, property) {
@@ -259,15 +216,15 @@ function generateFilterList(item) {
     clearElement(listId);
     if (Object.keys(Counter).length < 6) {
         getElement(item + 'ViewMoreBtn').classList.add("hidden");
-        getElement(listId).classList.add('noViewButton');
+        getElement(listId).classList.add('no-view-button');
     }
     else {
         getElement(item + 'ViewMoreBtn').classList.remove("hidden");
-        getElement(listId).classList.remove('noViewButton');
+        getElement(listId).classList.remove('no-view-button');
     }
     for (const property in Counter) {
         var filter = document.createElement("li");
-        filter.className = item + "Filter specialFilter";
+        filter.className = item + "-filter special-filter";
         filter.id = String(property) + "Filter";
         filter.innerHTML = String(property) + " (" + String(Counter[property]) + ")";
         var onclickFunction = "showEmployeeByProperty(String(this.id).substring(0, String(this.id).length - 6), '" + item + "')";
@@ -288,94 +245,95 @@ function clearKeywordField() {
 }
 
 function showAddEmployeeForm() {
-    getElement("addEmployeeModal").classList.remove("hidden");
-    getElement("employeeAddedMessage").classList.add("hidden");
+    getElement("employeeModal").classList.remove("hidden");
+    getElement("idDetails").classList.add("hidden");
+    getElement('updatePrompt').classList.add("hidden");
+    getElement("formHeader").innerHTML = "Add Employee Information";
+    var fields = getClassElements("field");
+    for (let k = 0; k < fields.length; k++) {
+        fields[k].value = "";
+        fields[k].removeAttribute("readonly");
+        fields[k].removeAttribute("ondblclick");
+    }
+    getElement("formSubmitBtn").setAttribute("onclick", "validateEmployeeDetails()");
+    getElement("firstName").setAttribute("onkeyup", "autofillPreferredName(String(this.value))");
 }
 
 function resetErrorMessages() {
-    var errorSigns = document.getElementsByClassName("errorSign");
-    for (let k = 0; k < errorSigns.length; k++) {
-        errorSigns[k].innerHTML = "";
-    }
-    var errorMessages = document.getElementsByClassName("errorMessage");
+    var errorMessages = getClassElements("error-message");
     for (let k = 0; k < errorMessages.length; k++) {
         errorMessages[k].innerHTML = "";
     }
 }
 
-function closeAddEmployeeForm() {
-    var addFields = document.getElementsByClassName("addField");
-    for (let k = 0; k < addFields.length; k++) {
-        addFields[k].value = "";
-        addFields[k].classList.remove("errorBorder");
+function closeEmployeeForm() {
+    var fields = getClassElements("field");
+    for (let k = 0; k < fields.length; k++) {
+        fields[k].value = "";
+        fields[k].classList.remove("error-border");
     }
     resetErrorMessages();
-    getElement("employeeAddedMessage").classList.add("hidden");
-    getElement("addEmployeeModal").classList.add("hidden");
-}
-
-document.getElementsByClassName('modal').onclick = function () {
-    var modalWindows = document.getElementsByClassName('modal');
-    for (var modal in modalWindows) {
-        modal.style.display = "none";
-    }
+    getElement("employeeModal").classList.add("hidden");
 }
 
 function showEmployeeDetails(id) {
-    getElement('updatedMessage').classList.add("hidden");
-    getElement("employeeDetailsModal").classList.remove("hidden");
+    getElement('updatePrompt').classList.remove("hidden");
+    getElement("idDetails").classList.remove("hidden");
+    getElement("employeeModal").classList.remove("hidden");
+    getElement("formHeader").innerHTML = "Edit Employee Information";
     var employee = employees.find(i => String(i.id) === id[0]);
     var properties = Object.keys(employee);
     for (let i = 0; i < properties.length; i++) {
-        getElement(properties[i] + 'Details').value = employee[properties[i]];
+        var field = getElement(properties[i]);
+        field.value = employee[properties[i]];
+        field.setAttribute("readonly", "true");
+        field.setAttribute("ondblclick", "editDetails(this.id)")
     }
+    getElement("formSubmitBtn").setAttribute("readonly", "true");
 }
 
 function editDetails(fieldId) {
     getElement(fieldId).removeAttribute('readonly');
-    var button = getElement("updateBtn");
+    var button = getElement("formSubmitBtn");
     button.removeAttribute("readonly");
-    button.setAttribute("onclick", "updateDetails(String(document.querySelector('#idDetails').value), fetchUpdatedFields())");
+    button.setAttribute("onclick", "updateDetails(String(document.querySelector('#id').value), fetchUpdatedFields())");
 } 
 
 function updateDetails(empId, updatedFieldsAndValues) {
     var nameFields = ['firstName', 'lastName', 'preferredName'];
     for (let i = 0; i < updatedFieldsAndValues.length; i++) {
         var updatedFieldAndValue = updatedFieldsAndValues[i];
-        var propertyField = updatedFieldAndValue.substr(0, updatedFieldAndValue.indexOf(' '));
-        var property = String(propertyField).substring(0, String(propertyField).length - 7);
+        var property = updatedFieldAndValue.substr(0, updatedFieldAndValue.indexOf(' '));
 
-        if (nameFields.includes(property) && !isValidName(propertyField)) {
+        if (nameFields.includes(property) && !isValidName(property)) {
             return;
         }
-        else if (property == "email" && !isValidEmail(propertyField)) {
+        else if (property == "email" && !isValidEmail(property)) {
             return;
         }
-        else if (property == "phoneNumber" && !isValidPhoneNumber(propertyField)) {
+        else if (property == "phoneNumber" && !isValidPhoneNumber(property)) {
             return;
         }
-        else if (!isNotNullField(propertyField)) {
+        else if (!isNotNullField(property)) {
             return;
         }
 
-        var updatedValue = updatedFieldAndValue.substr(updatedFieldAndValue.indexOf(' ') + 1);;
+        var updatedValue = updatedFieldAndValue.substr(updatedFieldAndValue.indexOf(' ') + 1);
         for (let i in employees) {
             if (employees[i].id == empId) {
                 employees[i][property] = updatedValue;
                 break;
             }
         }
-        getElement(propertyField).setAttribute("readonly", "true");
+        getElement(property).setAttribute("readonly", "true");
     }
-    getElement("updateBtn").setAttribute("readonly", "true");
-    getElement("updatedMessage").classList.remove("hidden");
     showAllEmployees();
     generateSpecialFilters();
-    setTimeout(closeEmployeeDetailsForm, 2000);
+    closeEmployeeForm();
 }
 
 function fetchUpdatedFields() {
-    var updateFields = document.getElementsByClassName('updateField');
+    var updateFields = document.getElementsByClassName('field');
     var updatedFieldsAndValues = [];
     for (var k = 0; k < updateFields.length; k++) {
         if (!updateFields[k].hasAttribute("readonly")) {
@@ -383,15 +341,6 @@ function fetchUpdatedFields() {
         }
     }
     return updatedFieldsAndValues;
-}
-
-function closeEmployeeDetailsForm() {
-    resetErrorMessages();
-    var updateFields = document.getElementsByClassName("updateField");
-    for (let k = 0; k < updateFields.length; k++) {
-        updateFields[k].classList.remove("errorBorder");       
-    }
-    getElement("employeeDetailsModal").classList.add("hidden");
 }
 
 function autofillPreferredName(str){
@@ -403,7 +352,7 @@ function hiddenFilterToggle(btnId, showMoreAction) {
     var listItems = getElement(listId).querySelectorAll('li');
     if (showMoreAction) {
         for (var i = 0; i < listItems.length; i++) {
-            listItems[i].classList.remove('specialFilter');
+            listItems[i].classList.remove('special-filter');
             
         }
         getElement(btnId).innerHTML = "Show Less";
@@ -411,11 +360,15 @@ function hiddenFilterToggle(btnId, showMoreAction) {
     }
     else {
         for (var i = 0; i < listItems.length; i++) {
-            listItems[i].classList.add('specialFilter');
+            listItems[i].classList.add('special-filter');
 
         }
         getElement(btnId).innerHTML = "Show More";
         getElement(btnId).setAttribute("onclick", "hiddenFilterToggle(String(this.id), 1)");
     }
     
+}
+
+function removeAutofill() {
+    getElement("firstName").removeAttribute("onkeyup");
 }

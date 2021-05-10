@@ -15,9 +15,9 @@
     			<h1>Employee Directory</h1>
     			<h3>The Ultimate People Directory Experience</h3>
     		</div>
-            <div class= 'employeePhoto' id= 'userPhoto'>AP</div>
+            <div class= 'employee-photo' id= 'userPhoto'>AP</div>
     		<div class = "user">
-    			<h1><span class = "welcomeMessage">Welcome,</span> Andrew Philips</h1>
+    			<h1><span class = "welcome-message">Welcome,</span> Andrew Philips</h1>
     		</div>
     	</div>
     	<div class = "content">
@@ -25,23 +25,23 @@
     			<h5>Departments</h5>
     			<ul id = "departmentList">
     			</ul>
-                <span class= "viewMoreBtn" id= "departmentViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
+                <span class= "view-more-btn" id= "departmentViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     			<h5>Offices</h5>
     			<ul id = "officeList">
     			</ul>
-                <span class= "viewMoreBtn" id= "officeViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
+                <span class= "view-more-btn" id= "officeViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     			<h5>Job Titles</h5>
     			<ul id = "jobTitleList">
     			</ul>
-                <span class= "viewMoreBtn" id= "jobTitleViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
+                <span class= "view-more-btn" id= "jobTitleViewMoreBtn" onclick= "hiddenFilterToggle(this.id, 1)">Show More</span>
     		</div>
     		<div class = "directory">
                 <div id = "letterFilters">
-                    <button id= "AllBtn" onclick= "showAllEmployees()"><i class='fa fa-user' aria-hidden='true'></i></button>
+                    <button id= "allBtn" onclick= "showAllEmployees()"><i class='fa fa-user' aria-hidden='true'></i></button>
                 </div>
                 <div id= "searchByKeyword">
                     <h5>Search</h5>
-                    <div class= "searchBar">
+                    <div class= "search-bar">
                         <img src= "images/search_icon.png" alt= "search">
                         <input id = "keywordTxt" type = "text" placeholder = "Enter any keyword" onkeyup = "showEmployeeByProperty(String(this.value), document.querySelector('#filterSelector').value)">
                     </div>
@@ -65,161 +65,74 @@
                 </div>
             </div>
         </div>
-        <div id = "addEmployeeModal" class = "modal hidden">
-            <div id = "addEmployeeForm" class= "modalContent">
-                <span class = "closeBtn" onclick= "closeAddEmployeeForm()">&times;</span>
-                <h3>Add New Employee Information</h3>
+        <div id = "employeeModal" class = "modal hidden">
+            <div id = "employeeForm" class= "modal-content">
+                <span class = "close-btn" onclick= "closeEmployeeForm()">&times;</span>
+                <h3 id= "formHeader">Add New Employee Information</h3>
                 <form>
-                    <div class= "formCol1">
-                        <div class = "formField">
+                    <div class = "form-field" id= "idDetails">
+                        <label for= "employeeIdDetails">Employee ID : </label>
+                        <input type="text" id= "id" readonly><br>
+                    </div>
+                    <div class= "form-col-1">
+                        <div class = "form-field">
                             <label for= "firstName">First Name : </label>
-                            <input type="text" id= "firstName" class= "addField" onkeyup= "autofillPreferredName(String(this.value))")>
-                            <span class= "errorSign" id= "firstNameErrorSign"></span>
-                            <div class= "errorMessage" id= "firstNameErrorMessage"></div>
+                            <input type="text" id= "firstName" class= "field" onkeyup= "autofillPreferredName(String(this.value))")>
+                            <div class= "error-message" id= "firstNameErrorMessage"></div>
                         </div>
                         
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "preferredName">Preferred Name : </label>
-                            <input type= "text" id= "preferredName" class= "addField">
-                            <span class= "errorSign" id= "preferredNameErrorSign"></span>
-                            <div class= "errorMessage" id= "preferredNameErrorMessage"></div>
+                            <input type= "text" id= "preferredName" class= "field" onclick = "removeAutofill()">
+                            <div class= "error-message" id= "preferredNameErrorMessage"></div>
                         </div>
                         
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "jobTitle">Job Title : </label>
-                            <input type= "text" id= "jobTitle" class= "addField">
-                            <span class= "errorSign" id= "jobTitleErrorSign"></span>
-                            <div class= "errorMessage" id= "jobTitleErrorMessage"></div>
+                            <input type= "text" id= "jobTitle" class= "field">
+                            <div class= "error-message" id= "jobTitleErrorMessage"></div>
                         </div>
 
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "department">Department : </label>
-                            <input type= "text" id= "department" class= "addField">
-                            <span class= "errorSign" id= "departmentErrorSign"></span>
-                            <div class= "errorMessage" id= "departmentErrorMessage"></div>
+                            <input type= "text" id= "department" class= "field">
+                            <div class= "error-message" id= "departmentErrorMessage"></div>
                         </div>
 
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "skypeId">Skype ID : </label>
-                            <input type= "text" id= "skypeId" class= "addField">
-                            <span class= "errorSign" id= "skypeIdErrorSign"></span>
-                            <div class= "errorMessage" id= "skypeIdErrorMessage"></div>
+                            <input type= "text" id= "skypeId" class= "field">
+                            <div class= "error-message" id= "skypeIdErrorMessage"></div>
                         </div>                       
                     </div>
-                    <div class= "formCol2">
-                        <div class = "formField">
+                    <div class= "form-col-2">
+                        <div class = "form-field">
                             <label for= "lastName">Last Name : </label>
-                            <input type="text" id= "lastName" class= "addField">
-                            <span class= "errorSign" id= "lastNameErrorSign"></span>
-                            <div class= "errorMessage" id= "lastNameErrorMessage"></div>
+                            <input type="text" id= "lastName" class= "field">
+                            <div class= "error-message" id= "lastNameErrorMessage"></div>
                         </div>
 
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "email">Email : </label>
-                            <input type= "email" id= "email" placeholder= "abc@example.com" class= "addField">
-                            <span class= "errorSign" id= "emailErrorSign"></span>
-                            <div class= "errorMessage" id= "emailErrorMessage"></div>
+                            <input type= "email" id= "email" placeholder= "abc@example.com" class= "field">
+                            <div class= "error-message" id= "emailErrorMessage"></div>
                         </div>
 
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "office">Office : </label>
-                            <input type= "text" id= "office" class= "addField">
-                            <span class= "errorSign" id= "officeErrorSign"></span>
-                            <div class= "errorMessage" id= "officeErrorMessage"></div>
+                            <input type= "text" id= "office" class= "field">
+                            <div class= "error-message" id= "officeErrorMessage"></div>
                         </div>
 
-                        <div class = "formField">
+                        <div class = "form-field">
                             <label for= "phoneNumber">Phone Number : </label>
-                            <input type= "tel" id= "phoneNumber" class= "addField">
-                            <span class= "errorSign" id= "phoneNumberErrorSign"></span>
-                            <div class= "errorMessage" id= "phoneNumberErrorMessage"></div>
+                            <input type= "tel" id= "phoneNumber" class= "field">
+                            <div class= "error-message" id= "phoneNumberErrorMessage"></div>
                         </div>                  
                     </div>
-                    <input class = "submitBtn" type= "button" value= "Submit" onclick= "validateEmployeeDetails()">
-                    <div class= "successMessage" id= "employeeAddedMessage">Employee successfully added to directory!</div>
+                    <input class = "submit-btn" id= "formSubmitBtn" type= "button" value= "Submit">
                 </form>
-            </div>
-        </div>
-        <div id= "employeeDetailsModal" class= "modal hidden">
-            <div id = "employeeDetailsForm" class= "modalContent">
-                <span class = "closeBtn" onclick= "closeEmployeeDetailsForm()">&times;</span>
-                <h3>Update Employee Information</h3>
-                <form>
-                    <div class= "formCol1">
-                        <div class = "formField">
-                            <label for= "employeeIdDetails">Employee ID : </label>
-                            <input type="text" id= "idDetails" readonly><br>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "lastNameDetails">Last Name : </label>
-                            <input type="text" id= "lastNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "lastNameDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "lastNameDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "emailDetails">Email : </label>
-                            <input type= "email" id= "emailDetails" class= "updateField" placeholder= "abc@example.com" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "emailDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "emailDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "officeDetails">Office : </label>
-                            <input type= "text" id= "officeDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "officeDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "officeDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "phoneNumberDetails">Phone Number : </label>
-                            <input type= "tel" id= "phoneNumberDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "phoneNumberDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "phoneNumberDetailsErrorMessage"></div>
-                        </div>  
-                    </div>
-                    <div class= "formCol2">
-                        <div class = "formField">
-                            <label for= "firstNameDetails">First Name : </label>
-                            <input type="text" id= "firstNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "firstNameDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "firstNameDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "preferredNameDetails">Preferred Name : </label>
-                            <input type= "text" id= "preferredNameDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "preferredNameDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "preferredNameDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "jobTitleDetails">Job Title : </label>
-                            <input type= "text" id= "jobTitleDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "jobTitleDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "jobTitleDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "departmentDetails">Department : </label>
-                            <input type= "text" id= "departmentDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "departmentDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "departmentDetailsErrorMessage"></div>
-                        </div>
-
-                        <div class = "formField">
-                            <label for= "skypeIdDetails">Skype ID : </label>
-                            <input type= "text" id= "skypeIdDetails" class= "updateField" ondblclick= "editDetails(this.id)" readonly>
-                            <span class= "errorSign" id= "skypeIdDetailsErrorSign"></span>
-                            <div class= "errorMessage" id= "skypeIdDetailsErrorMessage"></div>
-                        </div>          
-                    </div>                  
-                    <input type = "button" id = "updateBtn" class = "submitBtn" value= "Submit" readonly>
-                    <div class= "successMessage" id= "updatedMessage">Updated Successfully!</div>
-
-                </form>
-                <small>Double click on field to update details</small>
+                <small id= "updatePrompt">Double click on field to update details</small>
             </div>
         </div>
         <script src = "scripts/models/employee.js"></script>

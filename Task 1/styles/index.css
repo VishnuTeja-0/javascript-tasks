@@ -45,7 +45,7 @@
     display: inline-block;
 }
 
-.employeePhoto {
+.employee-photo {
     padding: 20px 15px;
     background-color: rgba(0,177,252,255);
     color: white;
@@ -57,7 +57,7 @@
     margin-top: 2px;
 }
 
-.welcomeMessage {
+.welcome-message {
     color: rgba(0,177,252,255);
 }
 
@@ -87,14 +87,14 @@
     color: rgba(90, 90, 90, 1);
 }
 
-.viewMoreBtn{
+.view-more-btn{
     display:inline-block;
     color: rgba(0,177,252,255);
     font-size: 10px;
     margin-bottom: 30px;
 }
 
-.viewMoreBtn:hover{
+.view-more-btn:hover{
     cursor: pointer;
 }
 
@@ -112,7 +112,7 @@
     background-color: rgba(0,150,250,255);
 }
 
-#AllBtn {
+#allBtn {
     margin-left: 0px !important;
     margin-right: -5px !important;
     padding: 0 !important;
@@ -131,15 +131,15 @@
     margin: 25px 0 20px;
 }
 
-.searchBar {
+.search-bar {
     position: relative;
 }
 
-.searchBar *{
+.search-bar *{
     display:inline-block;
 }
 
-.searchBar img{
+.search-bar img{
     width: 15px;
     height: 15px;
     position: absolute;
@@ -210,7 +210,7 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-.modalContent {
+.modal-content {
     background-color: white;
     overflow: hidden;
     margin: 6% auto;
@@ -219,12 +219,12 @@
     position: relative;
 }
 
-.formCol1{
+.form-col-1{
     width: 50%;
     float:left;
 }
 
-.formCol2 {
+.form-col-2 {
     width: 50%;
     float: right;
 }
@@ -237,28 +237,28 @@
     border-width: 1px;
 }
 
-.formField {
+.form-field {
     padding-bottom: 30px;
     position: relative;
 }
 
-.formField label {
+.form-field label {
     margin-bottom: 3px;
     display: block;
 }
 
-.errorMessage{
+.error-message{
     position:absolute;
     font-size: 12px;
     color: red;
     bottom: 10px;
 }
 
-.modalContent h3 {
+.modal-content h3 {
     margin: 0 0 20px;
 }
 
-.closeBtn {
+.close-btn {
     color: #aaaaaa;
     float: right;
     clear: left;
@@ -269,12 +269,12 @@
     top: 10px;
 }
 
-.closeBtn:hover{
+.close-btn:hover{
     color: black;
     cursor: pointer;
 }
 
-.submitBtn {
+.submit-btn {
     color: white;
     background-color: rgba(0,177,252,255);
     border-style: none !important;
@@ -284,7 +284,7 @@
     bottom: 20px;
 }
 
-.submitBtn:hover{
+.submit-btn:hover{
     cursor:pointer;
     background-color: rgba(0,150,250,255);
 }
@@ -310,23 +310,23 @@
     margin-bottom: 20px;
 }
 
-.card .employeePhoto {
+.card .employee-photo {
     float: left;
 }
 
-.card .employeeDetails{
+.card .employee-details{
     float: right;
     position: absolute;
     margin-left: 60px;
 }
 
-.card .employeeDetails h5 {
+.card .employee-details h5 {
     margin: 0 0 2px;
     color: rgba(80, 80, 80, 1);
     font-size: 78%;
 }
 
-.card .employeeDetails p {
+.card .employee-details p {
     margin: 1px 0;
     font-size: 70%;
     color: rgba(125, 125, 125, 1);
@@ -344,19 +344,14 @@
     text-decoration-color: rgba(90, 90, 90, 1);
 }
 
-#idDetails {
-    border-style: none;
-
+#id{
+    border-style: none
 }
 
-#employeeDetailsForm small{
+.modal-content small{
+    clear: left;
     margin-top: 10px;
     color: rgba(90, 90, 90, 1);
-}
-
-.successMessage{
-    display:block;
-    color: rgba(0,177,252,255);
 }
 
 #noResultsMessage{
@@ -364,26 +359,21 @@
     position: absolute;  
 }
 
-.actionLinks .fa{
+.action-links .fa{
     color: rgba(125, 125, 125, 1);
     font-size: 12px !important;
     margin-right: 7px;
 }
 
-.actionLinks .fa:hover{
+.action-links .fa:hover{
     color: rgba(70, 70, 70, 1);
 }
 
-.errorSign{
-    color: red;
-    font-size: 20px;
-}
-
-.nav ul .specialFilter:nth-of-type(1n+6) {
+.nav ul .special-filter:nth-of-type(1n+6) {
     display: none;
 }
 
-.errorBorder {
+.error-border {
     border-color: red !important;
 }
 
@@ -391,6 +381,6 @@
     display: none !important;
 }
 
-.noViewButton {
+.no-view-button {
     margin-bottom: 30px !important;
 }
